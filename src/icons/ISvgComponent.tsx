@@ -4,6 +4,8 @@ export interface ISvgComponent {
     height?: string;
     width?: string;
     fill?: string;
+    subclass?: string;
+    strokeFill?: string;
 
 
 }
