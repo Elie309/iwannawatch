@@ -1,6 +1,8 @@
 import React from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Home from "./pages/Home";
+import "./index.css";
+import Dashboard from "./pages/Dashboard";
 
 
 const App: React.FC = () => {
@@ -17,7 +19,7 @@ const App: React.FC = () => {
                 <Route path='dashboard'
 
                     element={
-                        <p className="font-bold underline-offset-2 ">Dashboard</p>
+                       <Dashboard />
                     }
                 />
 

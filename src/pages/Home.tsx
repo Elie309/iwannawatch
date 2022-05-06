@@ -7,8 +7,8 @@ const Home: React.FC = () => {
 
 
     return (
-        <div className='text-3xl font-bold underline'>
-            Home
+        <div className=''>
+            <p className="bg-red-200">Home</p>
             <br />
 
             <Link to="/dashboard">Dashboard</Link>
