@@ -14,14 +14,42 @@ enum DrawerState {
   CLOSING,
 }
 
-enum Tags {
-  ToWatch = "To Watch",
-  Watched = "Watched",
-  ToRead = "To Read",
-  Read = "Read",
-  ToDo = "ToDo",
-  Done = "Done",
+interface Tag {
+
+  label: string;
+  color: string;
 }
+
+const Tags: Tag[]  = [
+  {
+    label: "To Buy",
+    color: "red"
+  },
+  {
+    label: "To Watch",
+    color: "orange"
+  },
+  {
+    label: "Watched",
+    color: "yellow"
+  },
+  {
+    label: "To Read",
+    color: "green"
+  },
+  {
+    label: "Read",
+    color: "blue"
+  },
+  {
+    label: "Todo",
+    color: "purple"
+  },
+  {
+    label: "Done",
+    color: "gray"
+  }
+]
 
 
 export default class Drawer extends Component {
@@ -40,33 +68,35 @@ export default class Drawer extends Component {
 
   render() {
 
-    let TagsListJSX: JSX.Element[] = Object.values(Tags).map((tag: String | Tags, index: number) => {
+
+
+    const TagsListJSX = Tags.map((tag: Tag) => {
       return (
-        <div key={tag.toString()} className='tag-element p-2 flex hover:bg-red-200 cursor-pointer justify-start text-sm'>
-           <LabelFilledIcon className='p-0 items-center' height={`${ICON_HEIGHT}`} width={`${ICON_WIDTH}`} fill='red' />
-          <p key={tag.toString()} className="p-0" >{tag}</p>
+        <div key={tag.label} className='w-full p-2 flex group transition-colors hover:bg-red-600 cursor-pointer justify-start text-sm'>
+           <LabelFilledIcon className='p-0 items-center group' subclass={`group-hover:fill-white`} strokeFill="transparent" height={`${ICON_HEIGHT}`} width={`${ICON_WIDTH}`} fill={tag.color}/>
+          <p key={tag.label} className="p-0 group-hover:text-white" >{tag.label}</p>
         </div>
       )
     })
 
 
     return (
-      <div className='Drawer h-full flex flex-col bg-red-50'>
+      <div className='Drawer h-full flex flex-col shadow bg-stone-100 '>
 
-        <div className='my-3 px-2 cursor-pointer'>
+        <div className='my-3 px-5  md:px-3 cursor-pointer'>
           <a href="/"><img src="logo.svg" alt="Logo" className="w-full" /></a>
         </div>
 
 
-        <div className='group flex justify-center p-3 hover:bg-red-200 cursor-pointer '>
-          <AddCircleOutlinedIcon className='' height={`${ICON_HEIGHT}`} width={`${ICON_WIDTH}`}/>
-          <a className='p-0'>Add</a>
+        <div className='group w-full flex items-center p-3 hover:bg-red-600  transition-colors cursor-pointer '>
+          <AddCircleOutlinedIcon subclass="stroke-black group-hover:stroke-white" className='mx-2 group' height={`${ICON_HEIGHT}`} width={`${ICON_WIDTH}`}/>
+          <a className='p-0  group-hover:text-white'>Add</a>
         </div>
 
-        <div>
-          <p className='ml-2 my-2 font-bold text-1xl'>Tags</p>
+        <div className='w-full'>
+          <p className='ml-2 my-2 w-full font-bold text-1xl'>Tags</p>
 
-          <div className="tags-group">
+          <div>
 
             {TagsListJSX}
 
