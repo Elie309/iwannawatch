@@ -1,7 +1,7 @@
 import { ReleaseTypes } from "./Enums";
 
 export default interface IDate{
-    startedAt: Date;
+    startedAt?: Date;
     finishedAt?: Date;
-    releaseTypes: ReleaseTypes;
+    releaseTypes?: ReleaseTypes;
 }

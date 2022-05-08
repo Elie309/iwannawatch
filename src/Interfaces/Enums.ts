@@ -2,7 +2,12 @@ export enum ElementsTypes {
     Movie,
     Book,
     Series,
-    TvShow,
+    Other,
+    Unknown,
+}
+
+/*
+ TvShow,
     Anime,
     Special,
     Manga,
@@ -11,9 +16,7 @@ export enum ElementsTypes {
     Novel,
     Music,
     LiveAction,
-    Other,
-    Unknown,
-}
+*/
 
 export enum PersonalStateElement {
     Watched,
@@ -57,6 +60,20 @@ export enum SeriesType {
     Romance,
     Historical,
     Biography,
+    Poetry,
+    Thriller,
+    War,
+    Western,
+    Animation,
+    Family,
+    Kids,
+    News,
+    Reality,
+    Game,
+    Music,
+    Arts,
+    Other,
+    Unknown,
 
 }
 

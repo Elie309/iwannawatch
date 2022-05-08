@@ -1,21 +1,19 @@
 import { ElementsTypes, PersonalStateElement, GeneralStateElement } from "./Enums";
+import IDate from "./IDate";
 
-export default interface IElement{
+export default interface IElement extends IDate, Rating{
 
     id: number;
     title: string;
     type: ElementsTypes;
-    state: PersonalStateElement;
-    gernaralState: GeneralStateElement;
-    image: string;
-    description: string;
-    rating?: number;
+    state?: PersonalStateElement;
+    gernaralState?: GeneralStateElement;
+    image?: string;
+    description?: string;
     tags?: string[];
-    StartedDate: Date;
-    FinishedDate: Date;
-    // source?: string;
-    // source_id?: string;
-    // source_url?: string;
-    // source_rating?: number;
 
+}
+
+export interface Rating {
+    rating?: 0 | 1 | 2 | 3 | 4 | 5 ;
 }
