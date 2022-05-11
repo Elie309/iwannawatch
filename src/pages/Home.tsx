@@ -1,6 +1,7 @@
 import React from 'react';
 
 import { Link } from "react-router-dom";
+import AppearingMenu from '../components/AppearingMenu';
 
 
 const Home: React.FC = () => {
@@ -17,7 +18,7 @@ const Home: React.FC = () => {
 
             <Link to="/new-element">New Element</Link>
 
-
+                <br></br>
         </div>
     )
 
