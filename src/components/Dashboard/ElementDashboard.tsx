@@ -5,9 +5,13 @@ import IElement, { Rating } from '../../Interfaces/IElement';
 
 const RATING_ICON_HEIGHT = 16, RATING_ICON_WIDTH = 16;
 
-export default class ElementDashboard extends Component<IElement> {
+interface Props extends IElement{
+    className: string;
+}
 
-    constructor(props: IElement) {
+export default class ElementDashboard extends Component<Props> {
+
+    constructor(props: Props) {
         super(props);
 
         this.imageHandler = this.imageHandler.bind(this);
@@ -59,12 +63,12 @@ export default class ElementDashboard extends Component<IElement> {
     render() {
         return (
             <div
-                className="p-2 my-2 first:mt-0
+                className={`p-2 my-2 first:mt-0
             flex flex-col items-center 
-            bg-white shadow-lg rounded-lg
-            transition-all hover:scale-105 cursor-pointer
+            bg-white shadow-xl rounded-lg
             break-inside
-            ">
+            transition-all hover:ring-1 cursor-pointer
+            ` + this.props.className}>
 
                 <div className='w-full pt-1 pb-2 px-2 flex flex-row items-center justify-start'>
                     <img

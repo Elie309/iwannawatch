@@ -17,14 +17,6 @@ interface stateComponent {
     search: string,
 }
 
-enum searchBy {
-    TITLE = "title",
-    DESCRIPTION = "description",
-    GENRE = "genre",
-    TYPE = "type",
-
-}
-
 enum PorfilSettings {
     PROFILE = "profile",
     SETTINGS = "settings",
@@ -59,15 +51,15 @@ export default class Searchbar extends Component<Props, stateComponent> {
 
     render() {
 
-        const searchByList = Object.values(searchBy);
+        const searchByList = Object.values(PorfilSettings);
 
-        const AppearingChildList = searchByList.map((searchByStringElement: string, index: number) => {
+        const PorfilSettingsList = searchByList.map((PorfilSettingsElement: string, index: number) => {
             return (
                 <AppearingMenuChild
-                    key={searchByStringElement}
-                    text={searchByStringElement}
+                    key={PorfilSettingsElement}
+                    text={PorfilSettingsElement}
                     className="capitalize w-full p-2 hover:bg-red-600 hover:text-white"
-                    data-value={searchByStringElement}
+                    data-value={PorfilSettingsElement}
                 ></AppearingMenuChild>
             );
         });
@@ -133,7 +125,7 @@ export default class Searchbar extends Component<Props, stateComponent> {
                         dropDownClassName='flex flex-col w-32 mt-1 -translate-x-3/4 z-10 bg-white shadow-xl rounded-m'
                         onDropDownClick={this.handleDropDownClick}
                     >
-                        {AppearingChildList}
+                        {PorfilSettingsList}
                     </AppearingMenu>
 
                 </div>

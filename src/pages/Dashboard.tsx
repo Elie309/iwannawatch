@@ -1,8 +1,9 @@
 import React, { Component } from 'react'
 import Drawer from '../components/Dashboard/Drawer'
-import ElementDashboard from '../components/Dashboard/ElementDashboard'
+import HandlerDashboardElement from '../components/Dashboard/HandlerDashboardElement'
 import Searchbar from '../components/Dashboard/Searchbar'
-import { ElementsTypes, ReleaseTypes } from '../Interfaces/Enums'
+
+import { data } from '../data/DashboardElementData'
 
 
 export default class Dashboard extends Component {
@@ -14,141 +15,8 @@ export default class Dashboard extends Component {
         </div>
         <div className="flex-1 flex flex-col">
           <Searchbar />
-          <div className="main-content bg-stone-100 w-full h-full overflow-x-hidden overflow-y-scroll">
-            <div className="
-              p-5 
-              masonry sm:masonry-sm md:masonry-md lg:masonry-lg
-              ">
-              <ElementDashboard
-                id={1}
-                type={ElementsTypes.Series}
-                title="Title"
-                image="https://images.unsplash.com/photo-1518791841217-8f162f1e1131?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=800&q=60"
-                description='Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, quidem.'
-                releaseTypes={ReleaseTypes.Daily}
-
-              />
-
-              <ElementDashboard
-                id={1}
-                type={ElementsTypes.Series}
-                title="Title"
-                image="https://images.unsplash.com/photo-1518791841217-8f162f1e1131?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=800&q=60"
-                description='Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, quidem.'
-                releaseTypes={ReleaseTypes.Daily}
-
-              />
-              <ElementDashboard
-                id={1}
-                type={ElementsTypes.Series}
-                title="Title"
-                image="https://images.unsplash.com/photo-1518791841217-8f162f1e1131?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=800&q=60"
-                description='Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, quidem.'
-                releaseTypes={ReleaseTypes.Daily}
-
-              />
-              <ElementDashboard
-                id={1}
-                type={ElementsTypes.Series}
-                title="Title"
-                image="https://images.unsplash.com/photo-1518791841217-8f162f1e1131?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=800&q=60"
-                description='Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, quidem.'
-                releaseTypes={ReleaseTypes.Daily}
-
-              />
-
-              <ElementDashboard
-                id={1}
-                type={ElementsTypes.Series}
-                title="Title"
-                image="https://images.unsplash.com/photo-1518791841217-8f162f1e1131?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=800&q=60"
-                description='Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, quidem.'
-                releaseTypes={ReleaseTypes.Daily}
-
-              />
-              <ElementDashboard
-                id={1}
-                type={ElementsTypes.Series}
-                title="Title"
-                image="https://images.unsplash.com/photo-1518791841217-8f162f1e1131?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=800&q=60"
-                description='Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, quidem.'
-                releaseTypes={ReleaseTypes.Daily}
-
-              />
-
-              <ElementDashboard
-                id={1}
-                type={ElementsTypes.Series}
-                title="Title"
-                image="https://images.unsplash.com/photo-1518791841217-8f162f1e1131?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=800&q=60"
-                description='Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, quidem.'
-                releaseTypes={ReleaseTypes.Daily}
-
-              />
-              <ElementDashboard
-                id={1}
-                type={ElementsTypes.Series}
-                title="Title"
-                image="https://images.unsplash.com/photo-1518791841217-8f162f1e1131?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=800&q=60"
-                description='Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, quidem.'
-                releaseTypes={ReleaseTypes.Daily}
-
-              />
-              <ElementDashboard
-                id={1}
-                type={ElementsTypes.Series}
-                title="Title"
-                image="https://images.unsplash.com/photo-1518791841217-8f162f1e1131?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=800&q=60"
-                description='Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, quidem.'
-                releaseTypes={ReleaseTypes.Daily}
-
-              />
-              <ElementDashboard
-                id={1}
-                type={ElementsTypes.Series}
-                title="Title"
-                image="https://images.unsplash.com/photo-1518791841217-8f162f1e1131?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=800&q=60"
-                description='Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, quidem.'
-                releaseTypes={ReleaseTypes.Daily}
-
-              />
-              <ElementDashboard
-                id={1}
-                type={ElementsTypes.Series}
-                title="Title"
-                releaseTypes={ReleaseTypes.Daily}
-
-              />
-              <ElementDashboard
-                id={1}
-                type={ElementsTypes.Series}
-                title="Title"
-                releaseTypes={ReleaseTypes.Daily}
-
-              />
-              <ElementDashboard
-                id={1}
-                type={ElementsTypes.Series}
-                title="Title"
-                releaseTypes={ReleaseTypes.Daily}
-                startedAt={new Date()}
-
-              />
-              <ElementDashboard
-                id={1}
-                type={ElementsTypes.Series}
-                title="Title"
-                releaseTypes={ReleaseTypes.Daily}
-
-              />
-              <ElementDashboard
-                id={1}
-                type={ElementsTypes.Series}
-                title="Title"
-                releaseTypes={ReleaseTypes.Daily}
-
-              />
-            </div>
+          <div className="main-content bg-white-100 w-full h-full overflow-x-hidden overflow-y-scroll">
+              <HandlerDashboardElement data={data} className="" childClassName=''/>
           </div>
         </div>
 

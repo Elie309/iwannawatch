@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import LabelFilledIcon from '../../icons/LabelFilledIcon';
 import AddCircleOutlinedIcon from '../../icons/AddCircleOutlinedIcon';
-import "../styles/Drawer.css"
 
 
 const ICON_HEIGHT = 18;
