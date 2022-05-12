@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
-import LabelFilledIcon from '../icons/LabelFilledIcon';
-import AddCircleOutlinedIcon from '../icons/AddCircleOutlinedIcon';
+import LabelFilledIcon from '../../icons/LabelFilledIcon';
+import AddCircleOutlinedIcon from '../../icons/AddCircleOutlinedIcon';
 import "../styles/Drawer.css"
 
 
@@ -73,7 +73,7 @@ export default class Drawer extends Component {
     const TagsListJSX = Tags.map((tag: Tag) => {
       return (
         <div key={tag.label} className='w-full p-2 flex group transition-colors hover:bg-red-600 cursor-pointer justify-start text-sm'>
-           <LabelFilledIcon className='p-0 items-center group' subclass={`group-hover:fill-white`} strokeFill="transparent" height={`${ICON_HEIGHT}`} width={`${ICON_WIDTH}`} fill={tag.color}/>
+           <LabelFilledIcon className='p-0 items-center group' subclass={`group-hover:fill-white`} strokeFill="transparent" height={ICON_HEIGHT} width={ICON_WIDTH} fill={tag.color}/>
           <p key={tag.label} className="p-0 group-hover:text-white" >{tag.label}</p>
         </div>
       )
@@ -89,7 +89,7 @@ export default class Drawer extends Component {
 
 
         <div className='group w-full flex items-center p-3 hover:bg-red-600  transition-colors cursor-pointer '>
-          <AddCircleOutlinedIcon subclass="stroke-black group-hover:stroke-white" className='mx-2 group' height={`${ICON_HEIGHT}`} width={`${ICON_WIDTH}`}/>
+          <AddCircleOutlinedIcon subclass="stroke-black group-hover:stroke-white" className='mx-2 group' height={ICON_HEIGHT} width={ICON_WIDTH}/>
           <a className='p-0  group-hover:text-white'>Add</a>
         </div>
 

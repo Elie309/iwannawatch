@@ -1,8 +1,8 @@
 export interface ISvgComponent {
 
     className?: string;
-    height?: string;
-    width?: string;
+    height?: number;
+    width?: number;
     fill?: string;
     subclass?: string;
     strokeFill?: string;

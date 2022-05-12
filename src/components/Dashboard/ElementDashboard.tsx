@@ -1,8 +1,9 @@
 import React, { Component } from 'react'
-import StarRatingIcon from '../icons/StarRatingIcon';
-import IElement, { Rating } from '../Interfaces/IElement';
+import StarRatingIcon from '../../icons/StarRatingIcon';
+import IElement, { Rating } from '../../Interfaces/IElement';
 
 
+const RATING_ICON_HEIGHT = 16, RATING_ICON_WIDTH = 16;
 
 export default class ElementDashboard extends Component<IElement> {
 
@@ -127,11 +128,11 @@ const Rater = (props: Rating): JSX.Element => {
     return (
         <div className="rating">
             <div className="stars flex flex-row">
-                <StarRatingIcon className="star" fill={stars[0]} height="16" width="16" />
-                <StarRatingIcon className="star" fill={stars[1]} height="16" width="16" />
-                <StarRatingIcon className="star" fill={stars[2]} height="16" width="16" />
-                <StarRatingIcon className="star" fill={stars[3]} height="16" width="16" />
-                <StarRatingIcon className="star" fill={stars[4]} height="16" width="16" />
+                <StarRatingIcon className="star" fill={stars[0]} height={RATING_ICON_HEIGHT} width={RATING_ICON_WIDTH} />
+                <StarRatingIcon className="star" fill={stars[1]} height={RATING_ICON_HEIGHT} width={RATING_ICON_WIDTH} />
+                <StarRatingIcon className="star" fill={stars[2]} height={RATING_ICON_HEIGHT} width={RATING_ICON_WIDTH} />
+                <StarRatingIcon className="star" fill={stars[3]} height={RATING_ICON_HEIGHT} width={RATING_ICON_WIDTH} />
+                <StarRatingIcon className="star" fill={stars[4]} height={RATING_ICON_HEIGHT} width={RATING_ICON_WIDTH} />
             </div>
         </div>
     )

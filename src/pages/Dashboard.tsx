@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
-import Drawer from '../components/Drawer'
-import ElementDashboard from '../components/ElementDashboard'
-import Searchbar from '../components/Searchbar'
+import Drawer from '../components/Dashboard/Drawer'
+import ElementDashboard from '../components/Dashboard/ElementDashboard'
+import Searchbar from '../components/Dashboard/Searchbar'
 import { ElementsTypes, ReleaseTypes } from '../Interfaces/Enums'
 
 

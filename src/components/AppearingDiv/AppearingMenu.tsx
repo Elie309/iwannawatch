@@ -13,7 +13,6 @@ interface Props {
 }
 
 
-
 interface State {
     isOpen: boolean;
 }

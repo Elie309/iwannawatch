@@ -1,7 +1,7 @@
 import React from 'react';
 
 import { Link } from "react-router-dom";
-import AppearingMenu from '../components/AppearingMenu';
+import AppearingMenu from '../components/AppearingDiv/AppearingMenu';
 
 
 const Home: React.FC = () => {
