@@ -9,6 +9,10 @@ interface Props extends IElement{
     className: string;
 }
 
+interface RatingProp{
+    rating: Rating;
+}
+
 export default class ElementDashboard extends Component<Props> {
 
     constructor(props: Props) {
@@ -85,7 +89,6 @@ export default class ElementDashboard extends Component<Props> {
 
                 </div>
 
-                {/* Rating */}
 
                 {/* Load Image */}
                 {this.imageHandler()}
@@ -104,7 +107,7 @@ export default class ElementDashboard extends Component<Props> {
 }
 
 
-const Rater = (props: Rating): JSX.Element => {
+const Rater = (props: RatingProp): JSX.Element => {
 
     const filledStarsColor = '#ffd700'; // #ffb400
     const emptyStarsColor = '#d3d3d3';
