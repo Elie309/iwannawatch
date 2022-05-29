@@ -11,28 +11,36 @@ interface State{
 
 export default class Dashboard extends Component<Props, State> {
 
-  constructor(props: Props){
+  private DrawerRef = React.createRef<Drawer>();
+
+  constructor(props: Props) {
+
     super(props);
+
+    this.DrawerRef = React.createRef<Drawer>();
 
 
   }
+
 
   private data = fillData(4);
   
   render() {
     return (
-      <div className="container-fluid sm:flex flex-row h-full w-full">
-        <div className="drawer w-full sm:w-2/6 md:w-1/6 h-fit sm:h-full">
-          <Drawer />
-        </div>
-        <div className="flex-1 flex flex-col">
-          <Searchbar />
-          <div className="main-content bg-white-100 w-full h-full overflow-x-hidden overflow-y-scroll">
-              <HandlerDashboardElement data={this.data} className="" childClassName=''/>
-          </div>
-        </div>
-
+      <div className="container-fluid sm:flex flex-col h-full w-full">
+      <div className="w-full">
+        <Searchbar onPointerDownMainButton={(e) => {
+          this.DrawerRef.current?.ToggleDrawer();
+        }}
+        />
       </div>
+      <div className="flex-1 flex flex-row">
+        <Drawer ref={this.DrawerRef} />
+        <div className="main-content bg-white-100 w-full h-full overflow-x-hidden overflow-y-scroll">
+          <HandlerDashboardElement data={this.data} className="" childClassName='' />
+        </div>
+      </div>
+    </div>
     )
   }
 }

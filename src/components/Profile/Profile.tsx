@@ -53,9 +53,9 @@ export default class Profile extends Component<Props> {
                     <ProfilSkeleton height={ICON_HEIGHT_PROFILE} width={ICON_WIDTH_PROFILE} className='fill-slate-500' subclass='fill-white' />
 
                 }
-                className='user absolute right-0 w-20 cursor-pointer rounded-md '
-                buttonClassName='bg-none'
-                dropDownClassName='flex flex-col w-32 mt-1 -translate-x-3/4 z-10 bg-white shadow-xl rounded-m'
+                className='mr-3 w-10 cursor-pointer rounded-md '
+                buttonClassName='bg-none '
+                dropDownClassName='absolute flex flex-col w-32 mt-1 -translate-x-3/4 z-10 bg-white shadow-xl rounded-m'
                 onDropDownClick={this.handleDropDownClick}
             >
                 {PorfileSettingsList}

@@ -1,0 +1,21 @@
+.appearing-div-enter {
+    opacity: 0;
+
+}
+
+.appearing-div-enter-active {
+    opacity: 1;
+    transition: opacity 200ms;
+}
+
+.appearing-div-exit {
+    opacity: 1;
+}
+
+.appearing-div-exit-active {
+    opacity: 0;
+    transition: opacity 200ms;
+}
+.appearing-div-exit-done {
+    opacity: 0;
+}

@@ -1,5 +1,10 @@
-import React, { Component, ReactElement, ReactNode } from 'react'
+import React, { Component, ReactElement } from 'react'
 import { IAppearingChild } from './AppearingMenuChild';
+import { CSSTransition } from 'react-transition-group';
+import "../../styles/animation/AAppearingDiv.css"
+import { AnimationState } from '../../Interfaces/Others/AnimationState';
+
+
 
 interface Props {
 
@@ -15,6 +20,7 @@ interface Props {
 
 interface State {
     isOpen: boolean;
+    animationState: AnimationState;
 }
 
 export default class AppearingMenu extends Component<Props, State> {
@@ -30,7 +36,8 @@ export default class AppearingMenu extends Component<Props, State> {
 
         //State of the Appearing div
         this.state = {
-            isOpen: false
+            isOpen: false,
+            animationState: AnimationState.onEnter,
         }
 
         //Refs
@@ -43,6 +50,7 @@ export default class AppearingMenu extends Component<Props, State> {
         this.openAppearingDiv = this.openAppearingDiv.bind(this);
         this.toggleAppearingDiv = this.toggleAppearingDiv.bind(this);
         this.handleChildClick = this.handleChildClick.bind(this);
+        this.setAppearingDivState = this.setAppearingDivState.bind(this);
     }
     //#endregion
 
@@ -71,9 +79,16 @@ export default class AppearingMenu extends Component<Props, State> {
     }
 
     toggleAppearingDiv() {
+        if(this.state.animationState === AnimationState.onEntering ||this.state.animationState === AnimationState.onExiting ) return;
         this.setState({
             isOpen: !this.state.isOpen
         })
+    }
+
+    setAppearingDivState(animationState: AnimationState, callback?: () => void){
+        this.setState({
+            animationState
+        }, callback);
     }
 
     //#endregion
@@ -166,10 +181,23 @@ export default class AppearingMenu extends Component<Props, State> {
                 </button>
 
 
-                {/* The the dropdown envlopping div */}
+                
+                <CSSTransition
+                    in={isOpen}
+                    timeout={300}
+                    classNames='appearing-div'
+                    mountOnEnter={true}
+                    onEnter={() => {this.setAppearingDivState(AnimationState.onEnter) }}
+                    onEntering={() => { this.setAppearingDivState(AnimationState.onEntering) }}
+                    onEntered={() => { this.setAppearingDivState(AnimationState.onEntered) }}
+                    onExit={() => { this.setAppearingDivState(AnimationState.onExit) }}
+                    onExiting={() => { this.setAppearingDivState(AnimationState.onExiting) }}
+                    onExited={() => { this.setAppearingDivState(AnimationState.onExited) }}
+                >
+
                 <div ref={this.dropdownDivRef} id='dropdown'
                     className=
-                    {isOpen ? this.props.dropDownClassName : "hidden"}>
+                    {`${this.props.dropDownClassName}`}>
 
                     {React.Children.map(children, (child: ReactElement<IAppearingChild>) => {
                         const clonedChild = React.cloneElement(child, {
@@ -180,6 +208,8 @@ export default class AppearingMenu extends Component<Props, State> {
 
 
                 </div>
+
+                </CSSTransition>
             </div>
         )
     }

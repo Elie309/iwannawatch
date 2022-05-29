@@ -1,0 +1,52 @@
+.drawer-enter {
+    width: 50px;
+}
+
+.drawer-enter-active {
+    width: 150px;
+    transition: width 400ms;
+}
+.drawer-enter-done{
+    width: 150px;
+}
+
+.drawer-exit {
+    width: 150px;
+}
+
+.drawer-exit-active {
+    width: 50px;
+    transition: width 400ms;
+}
+
+.drawer-exit-done{
+    width: 50px;
+}
+
+
+
+
+.drawer-enter a{
+    opacity: 0;
+}
+
+.drawer-enter-active a{
+    opacity: 1;
+    transition: opacity 500ms ;
+}
+.drawer-enter-done a{
+    opacity: 1;
+}
+
+.drawer-exit a{
+    opacity: 1;
+}
+
+.drawer-exit-active a{
+    opacity: 0;
+    transition: opacity 500ms;
+}
+
+.drawer-exit-done a{
+    opacity: 0;
+}

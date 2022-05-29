@@ -35,7 +35,7 @@ export default class HandlerDashboardElement extends Component<Props> {
 
     render() {
         return (
-            <div className={`m-3 p-2 masonry sm:masonry-sm md:masonry-md lg:masonry-lg ${this.props.className}`}>
+            <div className={`overflow-auto m-3 p-2 masonry sm:masonry-sm md:masonry-md lg:masonry-lg ${this.props.className}`}>
                 {this.renderData()}
             </div>
         )
