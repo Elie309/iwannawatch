@@ -15,7 +15,7 @@ const Home: React.FC = () => {
 
             <br />
 
-            <Link to="/new-element">New Element</Link>
+            <Link to="/login">Login</Link>
 
                 <br></br>
         </div>

@@ -3,6 +3,8 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Home from "./pages/Home";
 import "./styles/index.css";
 import Dashboard from "./pages/Dashboard";
+import Login from "./pages/Login";
+import Register from "./pages/Register";
 
 
 const App: React.FC = () => {
@@ -23,9 +25,14 @@ const App: React.FC = () => {
                     }
                 />
 
-                <Route path="new-element"
+                <Route path="login"
                     element={
-                        <p> Add Element </p>
+                        <Login />
+                    }
+                />
+                <Route path="register"
+                    element={
+                        <Register />
                     }
                 />
 
