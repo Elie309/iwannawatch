@@ -1,5 +1,4 @@
 import React, { Component } from 'react'
-import { warning } from 'react-router/lib/router';
 
 interface Props {
 
@@ -11,7 +10,7 @@ interface Props {
     placeHolder: string;
     regExp?: RegExp | null;
     errorMessage?: string;
-
+    ref: React.RefObject<FromInput>;
 }
 
 interface State {
@@ -42,7 +41,15 @@ export default class FromInput extends Component<Props, State> {
         this.handleKeys = this.handleKeys.bind(this);
         this.handleFocus = this.handleFocus.bind(this);
         this.handleBlur = this.handleBlur.bind(this);
+        this.isValueCorrect = this.isValueCorrect.bind(this);
 
+    }
+
+    resetErrors(){
+        this.setState({
+            error: [],
+            warning: [],
+        })
     }
 
     handleChange = (e: React.ChangeEvent<HTMLInputElement>): void => {
@@ -89,24 +96,25 @@ export default class FromInput extends Component<Props, State> {
 
     handleBlur = (): void => {
 
+        //Here even if the value is false, there is still the fact that the value is not empty, so
+        //label will not translate back to the placeHolder
         this.setState({
             isFocused: false,
             warning: [],
         })
 
-
         const RegexInvalidMessage = this.props.errorMessage || "Invalid input";
-        if (this.props.regExp) {
-            if (!this.props.regExp.test(this.state.value)) {
-                this.setState({
-                    error: this.addMessageToState(this.state.error, RegexInvalidMessage)
-                })
-            } else {
-                this.setState({
-                    error: this.removeMessageFromState(this.state.error, RegexInvalidMessage)
-                })
-            }
+
+        if (this.isValueCorrect()) {
+            this.setState({
+                error: this.removeMessageFromState(this.state.error, RegexInvalidMessage)
+            })
+        } else {
+            this.setState({
+                error: this.addMessageToState(this.state.error, RegexInvalidMessage)
+            })
         }
+
     }
 
     setValue(value: string): void {
@@ -120,29 +128,30 @@ export default class FromInput extends Component<Props, State> {
         return this.state.value;
     }
 
+    isValueCorrect(): boolean {
+
+        if (this.props.regExp) {
+            return this.props.regExp.test(this.state.value);
+        }
+
+        return true;
+
+    }
+
     render() {
 
         let { name, type, className, groupClassName, textClassName, placeHolder } = this.props;
 
 
-        if (className === undefined) {
-            className = "";
-        }
-        if (groupClassName === undefined) {
-            groupClassName = "";
-        }
-        if (textClassName === undefined) {
-            textClassName = "";
-        }
+        if (className === undefined) className = "";
+        if (groupClassName === undefined) groupClassName = "";
+        if (textClassName === undefined) textClassName = "";
 
         let isThereAnError = this.state.error.length > 0;
         let isThereAWarning = this.state.warning.length > 0;
 
         // This is important because it handles the case where there is an input or the input is focused
         let labelClassName = this.state.isFocused || this.state.value !== "" ? "text-sm -translate-y-7" : "text-base";
-
-        let _inputClassName = `w-full h-10 p-3 text-gray-700 border border-gray-200 outline-0  ${this.state.error.length > 0 ? " ring-1 ring-red-200 " : " focus:border-blue-200 "} rounded-lg`;
-
 
 
         return (
@@ -151,7 +160,7 @@ export default class FromInput extends Component<Props, State> {
             >
                 <input
                     name={name}
-                    className={`${_inputClassName} ${className}`}
+                    className={`w-full h-10 p-3 text-gray-700 border border-gray-200 outline-0 ${this.state.error.length > 0 ? " ring-1 ring-red-200 " : " focus:border-blue-200 "} rounded-lg ${className}`}
                     type={type}
                     value={this.state.value}
                     onChange={this.handleChange}
