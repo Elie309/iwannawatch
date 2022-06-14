@@ -10,7 +10,7 @@ interface Props {
     placeHolder: string;
     regExp?: RegExp | null;
     errorMessage?: string;
-    ref: React.RefObject<FormInput>;
+    ref?: React.RefObject<FormInput>;
 }
 
 interface State {

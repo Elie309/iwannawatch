@@ -122,9 +122,9 @@ export default class Login extends Component<Props, State> {
 
                         <div className='mt-1 mb-5 text-center'>
                             <p className='text-gray-500 text-sm'>
-                                Don't have an account yet ?
+                                Don't have an account yet?
                                 <a className='cursor-pointer text-blue-600' href="/register">
-                                    &nbsp; Register now!
+                                    &nbsp;Register now!
                                 </a>
                             </p>
                         </div>
