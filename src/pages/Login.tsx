@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import FormInput from "../components/FormInput/FromInput";
+import FormInput from "../components/FormInput/FormInput";
 import { regEmail, regPasswordForLogin } from "../Utils/regexconfig"
 
 interface Props { }

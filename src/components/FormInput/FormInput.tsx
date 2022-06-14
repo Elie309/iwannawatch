@@ -10,7 +10,7 @@ interface Props {
     placeHolder: string;
     regExp?: RegExp | null;
     errorMessage?: string;
-    ref: React.RefObject<FromInput>;
+    ref: React.RefObject<FormInput>;
 }
 
 interface State {
@@ -22,7 +22,7 @@ interface State {
 
 
 
-export default class FromInput extends Component<Props, State> {
+export default class FormInput extends Component<Props, State> {
 
 
     constructor(props: Props) {

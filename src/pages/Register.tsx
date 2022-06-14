@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import FormInput from '../components/FormInput/FormInput'
 
 export default class Register extends Component {
   render() {
@@ -16,6 +17,11 @@ export default class Register extends Component {
           <div className="w-8/12 sm:10/12 mb-5 h-auto">
             <a href="/"><img src="/logo.svg" alt="" /></a>
           </div>
+
+          <div className="my-10">
+          </div>
+          <div className="my-10"></div>
+          <div className="my-10"></div>
 
         </div>
       </div>
