@@ -1,3 +1,5 @@
+//! Need to put a doulbe slash \\ to be able to insert a single slash in the regex
+
 /**
  * Regular Expression for email validation
  * - Characters before and after the @
@@ -6,7 +8,6 @@
  * - a-z characters allowed
  * - 0-9 numbers allowed
  * - Additionally email may contain only dot(.), dash(-), underscore(_) and other special characters
- * -
  */
 export const regEmail = new RegExp("^[\\w!#$%&’*+/=?`{|}~^-]+(?:\\.[\\w!#$%&’*+/=?`{|}~^-]+)*@(?:[a-zA-Z0-9-]+\\.)+[a-zA-Z]{2,6}$");
 
@@ -19,14 +20,14 @@ export const regEmail = new RegExp("^[\\w!#$%&’*+/=?`{|}~^-]+(?:\\.[\\w!#$%&�
  * - One number
  * - One special character:
  */
-export const regPasswordForRegistration = new RegExp("^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$");
+export const regPasswordForRegistration = new RegExp("^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[@$!%*?&])[A-Za-z\\d@$!%*?&]{8,}$");
 
 
 /**
  * Regular Expression for Password - Simple
  * - Minimum eight characters
  */
-export const regPasswordForLogin = new RegExp("^(?=.*\d).{8,}$");
+export const regPasswordForLogin = new RegExp("^(?=.*\\d).{8,}$");
 
 /**
  * Regular Expression for Username

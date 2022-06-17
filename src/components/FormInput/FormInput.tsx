@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-
+import ShowPassword from '../../icons/ShowPassword'
 interface Props {
 
     name: string;
@@ -18,12 +18,20 @@ interface State {
     isFocused: boolean;
     error: string[];
     warning: string[];
+    showPassword: boolean;
 }
-
 
 
 export default class FormInput extends Component<Props, State> {
 
+    //#region Private Fields
+
+    private refInput: React.RefObject<HTMLInputElement> = React.createRef<HTMLInputElement>();
+    private isPassword:boolean = this.props.type === 'password';
+
+    //#endregion
+
+    //#region Constructor
 
     constructor(props: Props) {
         super(props)
@@ -33,6 +41,8 @@ export default class FormInput extends Component<Props, State> {
             isFocused: false,
             error: [],
             warning: [],
+            showPassword: false,
+            
         }
 
         this.handleChange = this.handleChange.bind(this);
@@ -42,19 +52,30 @@ export default class FormInput extends Component<Props, State> {
         this.handleFocus = this.handleFocus.bind(this);
         this.handleBlur = this.handleBlur.bind(this);
         this.isValueCorrect = this.isValueCorrect.bind(this);
+        this.handleShowPassword = this.handleShowPassword.bind(this);
 
     }
 
-    resetErrors(){
-        this.setState({
-            error: [],
-            warning: [],
-        })
-    }
+    //#endregion
+ 
+    //#region Change Handlers
 
     handleChange = (e: React.ChangeEvent<HTMLInputElement>): void => {
         this.setValue(e.target.value);
     }
+
+    
+    handleShowPassword(e: React.MouseEvent<HTMLButtonElement, MouseEvent>): void {
+        e.preventDefault();
+
+        this.setState({
+            showPassword: !this.state.showPassword
+        }, () => {
+            if(this.refInput.current) this.refInput.current.type = this.state.showPassword ? 'text' : 'password';
+        })
+
+    }
+
 
     handleKeys = (e: React.KeyboardEvent<HTMLInputElement>): void => {
 
@@ -70,6 +91,17 @@ export default class FormInput extends Component<Props, State> {
                 warning: this.removeMessageFromState(this.state.warning, capsLockMessage)
             })
         }
+    }
+
+    //#endregion
+
+    //#region Errors Handlers
+
+    resetErrors() {
+        this.setState({
+            error: [],
+            warning: [],
+        })
     }
 
     addMessageToState(arr: string[], message: string): string[] {
@@ -88,6 +120,10 @@ export default class FormInput extends Component<Props, State> {
         return arr;
     }
 
+    //#endregion
+
+    //#region Focus And Blur
+   
     handleFocus = (e: React.FocusEvent<HTMLInputElement>): void => {
         this.setState({
             isFocused: true
@@ -104,7 +140,8 @@ export default class FormInput extends Component<Props, State> {
         })
 
         const RegexInvalidMessage = this.props.errorMessage || "Invalid input";
-
+        console.log(this.props.regExp?.test("b6Mx4!567"));
+        console.log(this.isValueCorrect())
         if (this.isValueCorrect()) {
             this.setState({
                 error: this.removeMessageFromState(this.state.error, RegexInvalidMessage)
@@ -116,6 +153,10 @@ export default class FormInput extends Component<Props, State> {
         }
 
     }
+
+    //#endregion
+
+    //#region Values
 
     setValue(value: string): void {
 
@@ -138,6 +179,8 @@ export default class FormInput extends Component<Props, State> {
 
     }
 
+    //#endregion
+
     render() {
 
         let { name, type, className, groupClassName, textClassName, placeHolder } = this.props;
@@ -152,33 +195,61 @@ export default class FormInput extends Component<Props, State> {
 
         // This is important because it handles the case where there is an input or the input is focused
         let labelClassName = this.state.isFocused || this.state.value !== "" ? "text-sm -translate-y-7" : "text-base";
-
+        let showPasswordClassName = this.state.showPassword ? " hover:fill-slate-500 fill-blue-600 " : " fill-slate-500 hover:fill-blue-600";
 
         return (
             <div
-                className={`relative flex items-center flex-col ${groupClassName}`}
+                className={`relative w-full flex items-center flex-col ${groupClassName}`}
             >
                 <input
                     name={name}
-                    className={`w-full h-10 p-3 text-gray-700 border border-gray-200 outline-0 ${this.state.error.length > 0 ? " ring-1 ring-red-200 " : " focus:border-blue-200 "} rounded-lg ${className}`}
+                    className={`w-full h-10 p-3 ${this.isPassword ? "pr-9" : "pr-3"} text-gray-700 border border-gray-200 outline-0 ${this.state.error.length > 0 ? " ring-1 ring-red-200 " : " focus:border-blue-200 "} rounded-lg ${className}`}
                     type={type}
                     value={this.state.value}
                     onChange={this.handleChange}
                     onFocus={this.handleFocus}
                     onBlur={this.handleBlur}
                     onKeyDown={this.handleKeys}
+                    ref={this.refInput}
                 />
 
+                {
+                    this.isPassword &&
+
+                    <button
+                    tabIndex={-1}
+                    className="absolute top-0 right-0 mt-2 mr-2 bg-transparent border-0"
+                    onClick={this.handleShowPassword}
+                    >
+                        <ShowPassword
+                            className={` w-5 h-full  cursor-pointer ${showPasswordClassName}`}
+                        />
+                    </button>
+                }
+
+
                 {/* Label */}
-                <label
-                    className={`absolute left-0 ml-2 mt-2 select-none text-gray-400 font-bold transition-transform duration-200 ${labelClassName} ${textClassName}`}
-                    htmlFor={name}
-                >
-                    {placeHolder}
-                </label>
+                <button
+                    tabIndex={-1}
+                    onClick={() => {
+                        this.setState({
+                            isFocused: true
+                        }, () => {
+                            this.refInput.current?.focus();
+
+                        })
+                    }}
+                    className={`absolute left-0 ml-2 mt-2 bg-transparent border-0 cursor-default transition-transform duration-200 ${labelClassName} ${textClassName}`}>
+                    <label
+                        className={`select-none text-gray-400 font-bold`}
+                        htmlFor={name}
+                    >
+                        {placeHolder}
+                    </label>
+                </button>
 
                 {/* ERROR Handler */}
-                <p className='text-xs self-start p-0 m-0 mt-1 h-2'>
+                <p className='text-xs self-start p-0 m-0 mt-1'>
                     {
                         isThereAnError &&
                         <span className='p-0  text-red-500'>

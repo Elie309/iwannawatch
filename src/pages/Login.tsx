@@ -74,7 +74,7 @@ export default class Login extends Component<Props, State> {
                                 lg:w-4/12 
                                 rounded-lg
                                 p-8
-                                pt-32 sm:pt-8
+                                py-32 sm:py-8
                          flex flex-col sm:justify-center items-center sm:shadow-xl sm:bg-white">
 
 
