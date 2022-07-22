@@ -80,7 +80,7 @@ export default class Register extends Component<Props, State> {
                 placeHolder='Password'
                 type='password'
                 regExp={regPasswordForRegistration}
-                errorMessage='Minimum eight characters, at least one uppercase letter, one lowercase letter, one number, one special character:'
+                errorMessage='Minimum eight characters, at least one uppercase letter, one lowercase letter and one number'
                 ref={this.passwordRef}
               />
             </div>
