@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import FormInput from "../components/FormInput/FormInput";
+import randomImage from '../Helpers/randomImage';
 import { regEmail, regPasswordForLogin } from "../Utils/regexconfig"
 
 interface Props { }
@@ -29,8 +30,8 @@ export default class Login extends Component<Props, State> {
 
     }
 
-    setError(error: string, callback?: Function): void{
-            
+    setError(error: string, callback?: Function): void {
+
         this.setState({
             error,
         }, () => {
@@ -57,7 +58,7 @@ export default class Login extends Component<Props, State> {
             console.log(email.getValue(), password.getValue())
             console.log("Login Success")
             //todo: login success
-        }else{
+        } else {
             this.setError('Invalid Email or Password');
         }
 
@@ -67,15 +68,17 @@ export default class Login extends Component<Props, State> {
 
     render() {
         return (
-            <div className="w-full min-h-full sm:flex justify-center items-center bg-slate-100 sm:bg-gray-50">
-                <div className="w-full h-full
-                                sm:w-8/12
-                                md:w-6/12 
-                                lg:w-4/12 
-                                rounded-lg
-                                p-8
-                                py-32 sm:py-8
-                         flex flex-col sm:justify-center items-center sm:shadow-xl sm:bg-white">
+
+            <div className="w-full h-full sm:flex justify-center items-center bg-slate-100 sm:bg-gray-50"
+            >
+                <div className="w-full h-fit
+                                    sm:w-8/12
+                                    md:w-6/12 
+                                    lg:w-4/12 
+                                    rounded-lg
+                                    p-8
+                                    py-32 sm:py-8
+                             flex flex-col sm:justify-center items-center sm:shadow-xl sm:bg-white">
 
 
                     <div className="w-8/12 sm:10/12 mb-5 h-auto">
@@ -115,7 +118,7 @@ export default class Login extends Component<Props, State> {
                         <p className='my-1 text-center text-red-600'>
                             {this.state.error}
                         </p>
-                            
+
                         <div className="mb-0 text-center">
                             <a className='cursor-pointer italic text-sm text-blue-600' href="/forgot-password">Forgot Password?</a>
                         </div>

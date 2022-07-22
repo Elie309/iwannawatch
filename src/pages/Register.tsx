@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import FormInput from '../components/FormInput/FormInput'
+import randomImage from '../Helpers/randomImage';
 import { regEmail, regPasswordForRegistration, regUsername } from '../Utils/regexconfig'
 
 
@@ -36,9 +37,12 @@ export default class Register extends Component<Props, State> {
 
 
   render() {
+
+   
     return (
-      <div className="w-full min-h-full sm:flex justify-center items-center bg-slate-100 sm:bg-gray-50">
-        <div className="w-full h-full
+      <div className="w-full h-full sm:flex justify-center items-center bg-slate-100 sm:bg-gray-50" 
+      >
+        <div className="w-full h-fit
                                 sm:w-8/12
                                 md:w-6/12 
                                 lg:w-4/12 
