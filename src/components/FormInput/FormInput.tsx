@@ -140,8 +140,6 @@ export default class FormInput extends Component<Props, State> {
         })
 
         const RegexInvalidMessage = this.props.errorMessage || "Invalid input";
-        console.log(this.props.regExp?.test("b6Mx4!567"));
-        console.log(this.isValueCorrect())
         if (this.isValueCorrect()) {
             this.setState({
                 error: this.removeMessageFromState(this.state.error, RegexInvalidMessage)
