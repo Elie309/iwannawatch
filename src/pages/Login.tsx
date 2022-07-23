@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import FormInput from "../components/FormInput/FormInput";
-import randomImage from '../Helpers/randomImage';
+import axiosInstance from '../data/axiosInstance';
+import { setAccessToken, setRefreshToken } from '../Helpers/TokenHandler';
 import { regEmail, regPasswordForLogin } from "../Utils/regexconfig"
 
 interface Props { }
@@ -40,7 +41,7 @@ export default class Login extends Component<Props, State> {
     }
 
 
-    onSubmit(e: React.ChangeEvent<HTMLFormElement>): void {
+    async onSubmit(e: React.ChangeEvent<HTMLFormElement>): Promise<void> {
         e.preventDefault();
 
         this.setError('');
@@ -55,9 +56,29 @@ export default class Login extends Component<Props, State> {
         if (email?.isValueCorrect() && password?.isValueCorrect()) {
             email.resetErrors();
             password.resetErrors();
-            console.log(email.getValue(), password.getValue())
-            console.log("Login Success")
-            //todo: login success
+            
+            try{
+
+                await axiosInstance.post('sessions', {
+                  email: email.getValue(),
+                  password: password.getValue(),
+                }).then(res => {return res.data}).then(data => {
+                  if(data.success){
+                    setAccessToken(data.data.accessToken)
+                    setRefreshToken(data.data.refreshToken)
+
+                    window.location.href = '/dashboard'
+                  }else{
+                    this.setError(data.message);
+                  }
+        
+                })
+        
+              }catch(e: any){
+                this.setError(e.response.data.message);
+              }
+
+
         } else {
             this.setError('Invalid Email or Password');
         }
@@ -69,8 +90,7 @@ export default class Login extends Component<Props, State> {
     render() {
         return (
 
-            <div className="w-full h-full sm:flex justify-center items-center bg-slate-100 sm:bg-gray-50"
-            >
+            <div className="w-full h-full sm:flex justify-center items-center bg-slate-100 sm:bg-gray-50">
                 <div className="w-full h-fit
                                     sm:w-8/12
                                     md:w-6/12 
