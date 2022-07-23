@@ -15,11 +15,12 @@ export const regEmail = new RegExp("^[\\w!#$%&â€™*+/=?`{|}~^-]+(?:\\.[\\w!#$%&â€
 /**
  * Regular Expression for Password - Complex
  * - Minimum eight characters
- * - At least one uppercase letter
+ * - One Uppercase letter
  * - One lowercase letter
  * - One number
+ * - One Special Character
  */
-export const regPasswordForRegistration = new RegExp("^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,}$");
+export const regPasswordForRegistration = new RegExp("^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[@$!%*?&])[A-Za-z\\d@$!%*?&]{8,}$");
 
 
 /**

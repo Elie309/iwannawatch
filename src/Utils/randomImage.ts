@@ -9,6 +9,6 @@ import RandomElementInArray from "./RandomElementInArray";
  * @returns returns a random require(imagePath);
  */
 export default function randomImage(pathPattern: string, min: number, max: number, filesExtension: string): any {
-    let rond = RandomElementInArray(1, 4);
+    let rond = RandomElementInArray(min, max);
     return require('../assets/images/'+ pathPattern + rond +"."+ filesExtension);
   }
