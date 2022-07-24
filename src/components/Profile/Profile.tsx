@@ -1,10 +1,11 @@
-import { profile } from 'console';
-import React, { Component } from 'react'
+import { Component } from 'react'
+import axiosInstance from '../../data/axiosInstance';
+import { setAccessToken, setRefreshToken } from '../../Helpers/TokenHandler';
 import ProfilSkeleton from '../../icons/ProfilSkeleton'
 import AppearingMenu from '../AppearingDiv/AppearingMenu';
 import AppearingMenuChild from '../AppearingDiv/AppearingMenuChild';
 
-interface Props{
+interface Props {
 
 }
 
@@ -15,7 +16,6 @@ enum ProfileSettings {
     PROFILE = "profile",
     SETTINGS = "settings",
     LOGOUT = "logout",
-            
 }
 
 export default class Profile extends Component<Props> {
@@ -28,7 +28,29 @@ export default class Profile extends Component<Props> {
     }
 
     handleDropDownClick(value: string) {
-        //TODO: What to do when we press on a settings in our profile
+        if (value === ProfileSettings.LOGOUT) this.LogoutHandler();
+        //TODO: Profile, settings
+    }
+
+
+    LogoutHandler() {
+        try {
+            axiosInstance.delete('sessions').then(res => {return res.data}).then(data => {
+                if(data.success) {
+                    setAccessToken(data.data.accessToken || '');
+                    setRefreshToken(data.data.refreshToken || '');
+                    window.location.reload();
+                }else{
+                    //TODO: handle why is it unsuccessfull
+                    setAccessToken('');
+                    setRefreshToken('');
+                    window.location.reload();
+                }
+            })
+
+        } catch (e: any) {
+            //TODO: Handle error
+        }
     }
 
 

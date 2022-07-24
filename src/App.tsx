@@ -6,21 +6,48 @@ import Dashboard from "./pages/Dashboard";
 import Login from "./pages/Login";
 import Register from "./pages/Register";
 import isSessionActive from "./Helpers/isSessionActive";
+import LoadingSpinner from "./components/Others/LoadingSpinner";
 
+
+enum LOADING_STATE {
+    NOT_LOADING = -1,
+    START = 0,
+    LOADING = 1,
+    FINISH = 2,
+}
 
 export default function App() {
+    const [loading, setLoading] = useState<LOADING_STATE>(LOADING_STATE.START);
     const [loggedIn, setLoggedIn] = useState<boolean>(false);
 
     useEffect(() => {
-        try{
+        try {
+            setLoading(LOADING_STATE.LOADING);
             const response = isSessionActive().then(res => {
+                setLoading(LOADING_STATE.FINISH);
                 setLoggedIn(res);
             });
-            
-        }catch(error: any){
+
+        } catch (error: any) {
+            setLoading(LOADING_STATE.FINISH);
             setLoggedIn(false);
         }
     }, [])
+
+
+    const HelpRendering = (MainElement: JSX.Element | React.ReactElement, LoadingElement: JSX.Element | React.ReactElement, SpareElement: JSX.Element | React.ReactElement): JSX.Element | React.ReactElement => {
+
+        if (loading === LOADING_STATE.START || loading === LOADING_STATE.LOADING) {
+            return LoadingElement;
+        }
+
+        if (loggedIn && loading === LOADING_STATE.FINISH) {
+            return MainElement;
+        }
+        return SpareElement;
+
+    }
+
 
     return (
         <BrowserRouter>
@@ -32,15 +59,15 @@ export default function App() {
                 />
 
                 <Route path='dashboard'
-                    element={ loggedIn ? <Dashboard /> : <Navigate to="/login" />}
+                    element={HelpRendering(<Dashboard />, <LoadingSpinner />, <Navigate to="/login" replace={true} />)}
                 />
 
 
                 <Route path="login"
-                    element={ !loggedIn  ? <Login /> : <Navigate to='/dashboard' />}
+                    element={HelpRendering(<Navigate to="/dashboard" replace={true} />, <LoadingSpinner />, <Login />)}
                 />
                 <Route path="register"
-                    element={ !loggedIn ? <Register /> : <Navigate to='/dashboard' />}
+                    element={HelpRendering(<Navigate to="/dashboard" replace={true} />, <LoadingSpinner />, <Register />)}
                 />
 
 
@@ -58,5 +85,6 @@ export default function App() {
         </BrowserRouter>
     );
 }
+
 
 
