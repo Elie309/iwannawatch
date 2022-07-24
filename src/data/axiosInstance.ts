@@ -7,7 +7,6 @@ const axios = require('axios');
 
 const axiosInstance: AxiosInstance = axios.create({
     baseURL: `${config.API_URL}/api/v1`,
-    timeout: 4000,
     withCredentials: true,
     headers: {
         'Authorization': 'Bearer ' + getAccessToken(),
