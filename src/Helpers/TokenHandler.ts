@@ -3,7 +3,8 @@
  * @returns Token as String
  */
 export function  getAccessToken(): string{
-    return sessionStorage.getItem('accessToken') || '';
+    
+    return localStorage.getItem('accessToken') || '';
 }
 
 /**
@@ -11,7 +12,7 @@ export function  getAccessToken(): string{
  * @param token Token to set in the session
  */
 export function setAccessToken(token: string): void{
-    sessionStorage.setItem('accessToken', token);
+    localStorage.setItem('accessToken', token);
 }
 
 /**
@@ -19,7 +20,7 @@ export function setAccessToken(token: string): void{
  * @returns Token as String
  */
  export function  getRefreshToken(): string{
-    return sessionStorage.getItem('refreshToken') || '';
+    return localStorage.getItem('refreshToken') || '';
 }
 
 /**
@@ -27,7 +28,7 @@ export function setAccessToken(token: string): void{
  * @param token Token to set in the session
  */
 export function setRefreshToken(token: string): void{
-    sessionStorage.setItem('refreshToken', token);
+    localStorage.setItem('refreshToken', token);
 }
 
 

@@ -18,7 +18,6 @@ const axiosInstance: AxiosInstance = axios.create({
 axiosInstance.interceptors.response.use((response: AxiosResponse<any, any>) => {
 
     if(response.headers['x-access-token']) {
-        console.log(response.headers['x-access-token']);
         setAccessToken(response.headers['x-access-token']);
     }
     if (response.data) {
@@ -39,16 +38,6 @@ axiosInstance.interceptors.response.use((response: AxiosResponse<any, any>) => {
       return Promise.reject(error);
 
 });
-
-
-// axiosInstance.interceptors.request.use((config) => {
-    
-//         console.log(config)
-    
-//         return config;
-    
-// })
-
 
 
 export default axiosInstance;

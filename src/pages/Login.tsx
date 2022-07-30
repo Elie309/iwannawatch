@@ -50,7 +50,6 @@ export default class Login extends Component<Props, State> {
 
         if (email === null || password === null) {
             this.setError('Internal Error, please try again later');
-            //todo: log error
             return;
         }
         if (email?.isValueCorrect() && password?.isValueCorrect()) {
