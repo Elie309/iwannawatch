@@ -1,4 +1,4 @@
-import React, { Component } from 'react'
+import React, { Component, MutableRefObject } from 'react'
 import ShowPassword from '../../icons/ShowPassword'
 interface Props {
 
@@ -10,7 +10,7 @@ interface Props {
     placeHolder: string;
     regExp?: RegExp | null;
     errorMessage?: string;
-    ref?: React.RefObject<FormInput>;
+    ref?: React.RefObject<FormInput> | MutableRefObject<FormInput>;
 }
 
 interface State {
