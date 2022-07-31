@@ -8,6 +8,9 @@ import Register from "./pages/Register";
 import isSessionActive from "./Helpers/isSessionActive";
 import LoadingSpinner from "./components/Others/LoadingSpinner";
 import Container from "./components/Others/Container";
+import ForgotPassword from "./pages/ForgotPassword";
+import ResetPassword from "./pages/ResetPassword";
+import EmailVerification from "./pages/EmailVerification";
 
 
 enum LOADING_STATE {
@@ -71,7 +74,20 @@ export default function App() {
                     element={HelpRendering(<Navigate to="/dashboard" replace={true} />, <LoadingSpinner />, <Container children={<Register />} />)}
                 />
 
+                <Route path="forgot-password">
+                    <Route 
+                        path=""
+                        element={HelpRendering(<Navigate to="/dashboard" replace={true} />, <LoadingSpinner />, <Container children={<ForgotPassword />} />)}
+                    />
+                    <Route path=':token' element={
+                        HelpRendering(<Navigate to="/dashboard" replace={true} />, <LoadingSpinner />, <Container children={<ResetPassword />} />)
+                    }/>
 
+                </Route>
+
+                <Route path="email-verification" element={
+                    HelpRendering(<Navigate to="/dashboard" replace={true} />, <LoadingSpinner />, <Container children={<EmailVerification data={{ username: "Elie309", email: 'elie309@outlook.fr' }} />} />)
+                } />
 
                 {/* NO MATCH ROUTE */}
                 <Route
