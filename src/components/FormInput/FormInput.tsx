@@ -11,6 +11,8 @@ interface Props {
     regExp?: RegExp | null;
     errorMessage?: string;
     ref?: React.RefObject<FormInput> | MutableRefObject<FormInput>;
+    customValidation?: () => boolean;
+    customValidationMessage?: string;
 }
 
 interface State {
@@ -150,6 +152,18 @@ export default class FormInput extends Component<Props, State> {
             })
         }
 
+        if(this.props.customValidation) {
+            if(this.props.customValidation()) {
+                this.setState({
+                    error: this.removeMessageFromState(this.state.error, this.props.customValidationMessage || "Custom validation failed")
+                })
+            } else {
+                this.setState({
+                    error: this.addMessageToState(this.state.error, this.props.customValidationMessage || "Custom validation failed")
+                })
+            }
+        }
+
     }
 
     //#endregion
@@ -171,6 +185,10 @@ export default class FormInput extends Component<Props, State> {
 
         if (this.props.regExp) {
             return this.props.regExp.test(this.state.value);
+        }
+
+        if(this.props.customValidation){
+            return this.props.customValidation();
         }
 
         return true;

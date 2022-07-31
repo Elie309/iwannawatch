@@ -19,7 +19,7 @@ export default class Container extends Component<Props, State> {
                                 py-32 sm:py-8
                          flex flex-col sm:justify-center items-center sm:shadow-xl sm:bg-white">
 
-                    {this.props.children}
+                        {this.props.children}
                 </div>
             </div>
         )
