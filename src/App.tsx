@@ -7,6 +7,7 @@ import Login from "./pages/Login";
 import Register from "./pages/Register";
 import isSessionActive from "./Helpers/isSessionActive";
 import LoadingSpinner from "./components/Others/LoadingSpinner";
+import Container from "./components/Others/Container";
 
 
 enum LOADING_STATE {
@@ -64,10 +65,10 @@ export default function App() {
 
 
                 <Route path="login"
-                    element={HelpRendering(<Navigate to="/dashboard" replace={true} />, <LoadingSpinner />, <Login />)}
+                    element={HelpRendering(<Navigate to="/dashboard" replace={true} />, <LoadingSpinner />, <Container children={<Login />} />)}
                 />
                 <Route path="register"
-                    element={HelpRendering(<Navigate to="/dashboard" replace={true} />, <LoadingSpinner />, <Register />)}
+                    element={HelpRendering(<Navigate to="/dashboard" replace={true} />, <LoadingSpinner />, <Container children={<Register />} />)}
                 />
 
 
