@@ -1,8 +1,8 @@
-interface config{
+interface IConfig{
     API_URL: string;
 }
 
-const config: config = {
+const config: IConfig = {
     API_URL: "http://localhost:4000",
 }
 

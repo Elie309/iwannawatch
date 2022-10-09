@@ -27,7 +27,7 @@ export default function App() {
     useEffect(() => {
         try {
             setLoading(LOADING_STATE.LOADING);
-            const response = isSessionActive().then(res => {
+            isSessionActive().then(res => {
                 setLoading(LOADING_STATE.FINISH);
                 setLoggedIn(res);
             });
@@ -63,7 +63,8 @@ export default function App() {
                 />
 
                 <Route path='dashboard'
-                    element={HelpRendering(<Dashboard />, <LoadingSpinner />, <Navigate to="/login" replace={true} />)}
+                    // element={HelpRendering(<Dashboard />, <LoadingSpinner />, <Navigate to="/login" replace={true} />)}
+                    element={<Dashboard />}
                 />
 
 

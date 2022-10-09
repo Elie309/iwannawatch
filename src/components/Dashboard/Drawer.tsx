@@ -1,9 +1,11 @@
-import React, { Component } from 'react';
+import { Component } from 'react';
 import LabelFilledIcon from '../../icons/LabelFilledIcon';
 import AddCircleOutlinedIcon from '../../icons/AddCircleOutlinedIcon';
 import { CSSTransition } from 'react-transition-group';
 import '../../styles/animation/ADrawer.css';
 import { AnimationState } from '../../Interfaces/Others/AnimationState';
+import { CheckPageWidthDimensions, EPageDimensions } from '../../Utils/CheckPageWidthDimensions';
+import SearchForm from './SearchForm';
 
 const ICON_HEIGHT = 25;
 const ICON_WIDTH = 25;
@@ -51,6 +53,7 @@ interface Props { }
 interface State {
   isDrawerOpen: boolean,
   drawerState: AnimationState,
+  width: number,
 }
 
 
@@ -62,6 +65,7 @@ export default class Drawer extends Component<Props, State>  {
     this.state = {
       isDrawerOpen: false,
       drawerState: 0,
+      width: window.innerWidth,
     }
 
     this.ToggleDrawer = this.ToggleDrawer.bind(this);
@@ -69,6 +73,9 @@ export default class Drawer extends Component<Props, State>  {
 
   }
 
+  /**
+   * Toggle the drawer to open and close
+   */
   ToggleDrawer() {
 
     if (this.state.drawerState === AnimationState.onEntering || this.state.drawerState === AnimationState.onExiting) {
@@ -79,6 +86,11 @@ export default class Drawer extends Component<Props, State>  {
     })
   }
 
+  /**
+   * Change drawer state using AnimationState enum
+   * @param drawerState AnimationState enum
+   * @param callback Function if necessary
+   */
   setDrawerState(drawerState: AnimationState, callback?: () => void) {
 
     this.setState({
@@ -87,17 +99,49 @@ export default class Drawer extends Component<Props, State>  {
 
   }
 
+  /**
+   * Return a JSX.Element searchForm is it is on small and medium screen and a hidden div if it is on large screen
+   * @returns JSX.Element - SearchForm or hidden div
+   */
+  searchForm(): JSX.Element {
+
+    if (CheckPageWidthDimensions(EPageDimensions.md) || CheckPageWidthDimensions(EPageDimensions.sm)) {
+      return (
+        <div className='m-2 px-3'>
+          <SearchForm />
+        </div>
+      )
+    }
+
+    return <div className='hidden'></div>
+
+  }
+
+
+  /**
+   * Update the state width of the window to render the component again.
+   */
+  updateDimensions = () => {
+    this.setState({ width: window.innerWidth });
+  };
+
+  componentDidMount() {
+    window.addEventListener('resize', this.updateDimensions);
+  }
+  componentWillUnmount() {
+    window.removeEventListener('resize', this.updateDimensions);
+  }
 
   render() {
 
-
-
+    /**
+     * Render the tags
+     */
     const TagsListJSX = Tags.map((tag: Tag) => {
       return (
-        <div key={tag.label} className='w-full p-2 flex group transition-colors hover:bg-red-600 cursor-pointer justify-start'>
-
+        <div key={tag.label} className={`w-full py-2 pl-3 pr-2 flex items-center group text-base transition-colors hover:bg-red-600 cursor-pointer ${CheckPageWidthDimensions(EPageDimensions.sm, EPageDimensions.md) ? "justify-center py-4 text-lg" : "justify-start"}`}>
           <LabelFilledIcon className='p-0 group' subclass={`group-hover:fill-white`} strokeFill="transparent" height={ICON_HEIGHT} width={ICON_WIDTH} fill={tag.color} />
-          <a key={tag.label} className={`${this.state.drawerState === 2 ? "" : "hidden"} group-hover:text-white`} >{tag.label}</a>
+          <button key={tag.label} className={`border-none bg-transparent ${this.state.drawerState === 2 ? "" : "hidden"} group-hover:text-white`} >{tag.label}</button>
         </div>
       )
     })
@@ -109,33 +153,38 @@ export default class Drawer extends Component<Props, State>  {
         <CSSTransition
           in={this.state.isDrawerOpen} timeout={400}
           classNames='drawer'
-          mountOnEnter={false}
-          onEnter={() => {this.setDrawerState(AnimationState.onEnter) }}
+          mountOnEnter={CheckPageWidthDimensions(EPageDimensions.sm, EPageDimensions.md)}
+          onEnter={() => { this.setDrawerState(AnimationState.onEnter) }}
           onEntering={() => { this.setDrawerState(AnimationState.onEntering) }}
           onEntered={() => { this.setDrawerState(AnimationState.onEntered) }}
           onExit={() => { this.setDrawerState(AnimationState.onExit) }}
           onExiting={() => { this.setDrawerState(AnimationState.onExiting) }}
           onExited={() => { this.setDrawerState(AnimationState.onExited) }}
-        >
-          <div className='h-full flex flex-col shadow bg-stone-100 '>
 
-            
-            <div className='group w-full flex items-center p-3 hover:bg-red-600  transition-colors cursor-pointer '>
-              <AddCircleOutlinedIcon subclass="stroke-black group-hover:stroke-white" className='mx-2 group' height={ICON_HEIGHT} width={ICON_WIDTH} />
-              <a className={`${this.state.drawerState === 2 ? "" : "hidden"}  group-hover:text-white`}>Add</a>
+        >
+          <div className='drawer h-screen flex flex-col shadow bg-stone-100 overflow-x-hidden overflow-y-auto pb-20'>
+
+            {this.searchForm()}
+
+            <div className={`w-full py-2 pl-3 pr-2 flex items-center group text-base transition-colors hover:bg-red-600 cursor-pointer ${CheckPageWidthDimensions(EPageDimensions.sm, EPageDimensions.md) ? "justify-center py-4 text-lg" : "justify-start"}`}>
+
+              <AddCircleOutlinedIcon subclass="stroke-black group-hover:stroke-white" className='group' height={ICON_HEIGHT} width={ICON_WIDTH} />
+              <button className={`bg-transparent bordenone ${this.state.drawerState === 2 ? "" : "hidden"}  group-hover:text-white`}>Add</button>
             </div>
 
-            <div className='w-full'>
-              <p className='ml-2 my-2 w-full font-bold text-1xl'>Tags</p>
+            <div className={`w-full ${CheckPageWidthDimensions(EPageDimensions.sm, EPageDimensions.md) ? "text-center py-4 text-lg" : "justify-start"}`}>
+
+              <p className='mx-2 my-2 w-full font-bold text-1xl'>Tags</p>
 
               <div>
 
                 {TagsListJSX}
 
               </div>
+
             </div>
 
-
+            r-
           </div>
         </CSSTransition>
       </div>
