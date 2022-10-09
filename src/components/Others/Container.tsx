@@ -9,7 +9,7 @@ interface State { }
 export default class Container extends Component<Props, State> {
     render() {
         return (
-            <div className="w-full h-full sm:flex justify-center items-center bg-slate-100 sm:bg-gray-50">
+            <div className="w-full min-h-full sm:flex justify-center items-center bg-slate-100 sm:bg-gray-50">
                 <div className="w-full h-fit
                                 sm:w-8/12
                                 md:w-6/12 
