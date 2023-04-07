@@ -1,8 +1,8 @@
 import React, { useRef } from 'react'
 import { useParams } from 'react-router-dom';
-import FormInput from '../components/FormInput/FormInput';
-import checkifAllFormInputAreOkay from '../Helpers/checkIfAllFormInputAreOkay';
-import { regEmail } from '../Utils/regexconfig'
+import FormInput from '../../components/FormInput/FormInput';
+import checkifAllFormInputAreOkay from '../../Helpers/checkIfAllFormInputAreOkay';
+import { regEmail } from '../../Utils/regexconfig'
 
 interface Props { }
 

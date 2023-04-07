@@ -184,7 +184,6 @@ export default class Drawer extends Component<Props, State>  {
 
             </div>
 
-            r-
           </div>
         </CSSTransition>
       </div>

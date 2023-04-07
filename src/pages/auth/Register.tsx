@@ -1,12 +1,12 @@
 import React, { useRef } from 'react'
-import FormInput from '../components/FormInput/FormInput'
-import { regEmail, regPasswordForRegistration, regUsername } from '../Utils/regexconfig'
-import axiosInstance from '../data/axiosInstance'
-import checkifAllFormInputAreOkay from '../Helpers/checkIfAllFormInputAreOkay'
-import IUnifyResponse from '../Interfaces/IUnifyResponse'
+import FormInput from '../../components/FormInput/FormInput'
+import { regEmail, regPasswordForRegistration, regUsername } from '../../Utils/regexconfig'
+import axiosInstance from '../../data/axiosInstance'
+import checkifAllFormInputAreOkay from '../../Helpers/checkIfAllFormInputAreOkay'
+import IUnifyResponse from '../../Interfaces/IUnifyResponse'
 import { AxiosError, AxiosResponse } from 'axios'
 import { useQuery } from '@tanstack/react-query'
-import LoadingSpinner from '../components/Others/LoadingSpinner'
+import LoadingSpinner from '../../components/Others/LoadingSpinner'
 
 
 interface Props { }

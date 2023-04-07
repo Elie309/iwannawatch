@@ -1,13 +1,13 @@
 import { useQuery } from '@tanstack/react-query';
 import { AxiosError, AxiosResponse } from 'axios';
 import React, { ReactElement, useRef } from 'react';
-import FormInput from "../components/FormInput/FormInput";
-import LoadingSpinner from '../components/Others/LoadingSpinner';
-import axiosInstance from '../data/axiosInstance';
-import checkifAllFormInputAreOkay from '../Helpers/checkIfAllFormInputAreOkay';
-import { setAccessToken, setRefreshToken } from '../Helpers/TokenHandler';
-import IUnifyResponse from '../Interfaces/IUnifyResponse';
-import { regEmail, regPasswordForLogin } from "../Utils/regexconfig"
+import FormInput from "../../components/FormInput/FormInput";
+import LoadingSpinner from '../../components/Others/LoadingSpinner';
+import axiosInstance from '../../data/axiosInstance';
+import checkifAllFormInputAreOkay from '../../Helpers/checkIfAllFormInputAreOkay';
+import { setAccessToken, setRefreshToken } from '../../Helpers/TokenHandler';
+import IUnifyResponse from '../../Interfaces/IUnifyResponse';
+import { regEmail, regPasswordForLogin } from "../../Utils/regexconfig"
 
 interface Props { }
 

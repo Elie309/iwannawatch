@@ -1,8 +1,8 @@
 import { useRef } from 'react'
-import Drawer from '../components/Dashboard/Drawer'
-import HandlerDashboardElement from '../components/Dashboard/HandlerDashboardElement'
-import Searchbar from '../components/Dashboard/Searchbar'
-import { fillData } from '../data/DashboardElementData'
+import Drawer from '../../components/Dashboard/Drawer'
+import HandlerDashboardElement from '../../components/Dashboard/HandlerDashboardElement'
+import Searchbar from '../../components/Dashboard/Searchbar'
+import { fillData } from '../../data/DashboardElementData'
 
 interface Props { }
 

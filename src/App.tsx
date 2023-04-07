@@ -2,15 +2,15 @@ import React, { useEffect, useState } from "react";
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import Home from "./pages/Home";
 import "./styles/index.css";
-import Dashboard from "./pages/Dashboard";
-import Login from "./pages/Login";
-import Register from "./pages/Register";
+import Dashboard from "./pages/dashboard/Dashboard";
+import Login from "./pages/auth/Login";
+import Register from "./pages/auth/Register";
 import isSessionActive from "./Helpers/isSessionActive";
 import LoadingSpinner from "./components/Others/LoadingSpinner";
 import Container from "./components/Others/Container";
-import ForgotPassword from "./pages/ForgotPassword";
-import ResetPassword from "./pages/ResetPassword";
-import EmailVerification from "./pages/EmailVerification";
+import ForgotPassword from "./pages/auth/ForgotPassword";
+import ResetPassword from "./pages/auth/ResetPassword";
+import EmailVerification from "./pages/auth/EmailVerification";
 
 
 enum LOADING_STATE {
