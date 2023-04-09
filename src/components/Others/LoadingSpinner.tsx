@@ -1,26 +1,14 @@
-import React, { Component } from 'react'
 import '../../styles/animation/LoadingSpinner.css'
 
-interface Props {}
-interface State {}
 
-export default class LoadingSpinner extends Component<Props, State> {
+export default function LoadingSpinner() {
 
-    constructor(props: Props) {
-        super(props);
+    return (
 
-     
-    }
-
-    render() {
-
-        return (
-        
         <div className='loading-ripple'>
             <div></div>
             <div></div>
-        </div> 
+        </div>
 
-        )
-    }
+    )
 }

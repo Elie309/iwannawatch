@@ -1,16 +1,18 @@
-import React, { useEffect, useState } from "react";
+import React, { Suspense, useEffect, useState } from "react";
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import Home from "./pages/Home";
 import "./styles/index.css";
-import Dashboard from "./pages/dashboard/Dashboard";
-import Login from "./pages/auth/Login";
-import Register from "./pages/auth/Register";
+
 import isSessionActive from "./Helpers/isSessionActive";
 import LoadingSpinner from "./components/Others/LoadingSpinner";
 import Container from "./components/Others/Container";
-import ForgotPassword from "./pages/auth/ForgotPassword";
-import ResetPassword from "./pages/auth/ResetPassword";
-import EmailVerification from "./pages/auth/EmailVerification";
+
+const Dashboard = React.lazy(() => import("./pages/dashboard/Dashboard"));
+const Login = React.lazy(() => import("./pages/auth/Login"));
+const Register = React.lazy(() => import("./pages/auth/Register"));
+const ForgotPassword = React.lazy(() => import("./pages/auth/ForgotPassword"));
+const ResetPassword = React.lazy(() => import("./pages/auth/ResetPassword"));
+const EmailVerification = React.lazy(() => import("./pages/auth/EmailVerification"));
 
 
 enum LOADING_STATE {
@@ -41,14 +43,20 @@ export default function App() {
 
     const HelpRendering = (MainElement: JSX.Element | React.ReactElement, LoadingElement: JSX.Element | React.ReactElement, SpareElement: JSX.Element | React.ReactElement): JSX.Element | React.ReactElement => {
 
-        if (loading === LOADING_STATE.START || loading === LOADING_STATE.LOADING) {
-            return LoadingElement;
-        }
+        // if (loading === LOADING_STATE.START || loading === LOADING_STATE.LOADING) {
+        //     return LoadingElement;
+        // }
 
-        if (loggedIn && loading === LOADING_STATE.FINISH) {
-            return MainElement;
-        }
-        return SpareElement;
+        // if (loggedIn && loading === LOADING_STATE.FINISH) {
+        //     return MainElement;
+        // }
+        // return SpareElement;
+
+        return (
+            <Suspense key={1}  fallback={LoadingElement}>
+                {(loggedIn && loading === LOADING_STATE.FINISH) ? MainElement : SpareElement}
+            </Suspense>
+        )
 
     }
 
@@ -64,7 +72,7 @@ export default function App() {
 
                 <Route path='dashboard'
                     // element={HelpRendering(<Dashboard />, <LoadingSpinner />, <Navigate to="/login" replace={true} />)}
-                    element={<Dashboard />}
+                    element={HelpRendering(<Dashboard />, <LoadingSpinner />, <Dashboard />)}
                 />
 
 

@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import { ReactElement } from 'react'
 import ElementDashboard from './ElementDashboard';
 import IElement from '../../Interfaces/IElement';
 
@@ -9,35 +9,30 @@ interface Props {
 }
 
 
-export default class HandlerDashboardElement extends Component<Props> {
-
-    constructor(props: Props) {
-        super(props);
+export default function HandlerDashboardElement(props: Props): ReactElement<Props, any> {
 
 
-    }
+    const renderData = () => {
 
-    renderData() {
-        const { data } = this.props;
+        const { data } = props;
 
         const ElementList = data.map((element: IElement) => {
             return (
                 <ElementDashboard
-                key={element.id}
-                    className={this.props.childClassName}
+                    key={element.id}
+                    className={props.childClassName}
                     {...element}
                 />
             )
         });
         return ElementList;
+
     }
 
 
-    render() {
-        return (
-            <div className={`m-3 p-2 masonry sm:masonry-sm md:masonry-md lg:masonry-lg ${this.props.className}`}>
-                {this.renderData()}
-            </div>
-        )
-    }
+    return (
+        <div className={`m-3 p-2 masonry sm:masonry-sm md:masonry-md lg:masonry-lg ${props.className}`}>
+            {renderData()}
+        </div>
+    )
 }

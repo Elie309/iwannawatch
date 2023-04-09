@@ -11,9 +11,6 @@ import LoadingSpinner from '../../components/Others/LoadingSpinner'
 
 interface Props { }
 
-interface State {
-  errorMessage: string;
-}
 
 const createUser = async (username: string, email: string, password: string): Promise<AxiosResponse<IUnifyResponse, any>> => {
   return await axiosInstance.post<IUnifyResponse>('users', {
@@ -32,7 +29,11 @@ export default function Register(): React.ReactElement<Props, any> {
 
   const [errorForm, setErrorForm] = React.useState<string | null>(null);
 
-  const { refetch, isFetching } = useQuery(['login'], () => createUser(usernameRef.current!.getValue(), emailRef.current!.getValue(), passwordRef.current!.getValue()),
+  const { refetch, isFetching } = useQuery(['login'],
+    () => createUser(usernameRef.current!.getValue(),
+      emailRef.current!.getValue(),
+      passwordRef.current!.getValue()
+    ),
     {
       enabled: false,
       refetchOnWindowFocus: false,

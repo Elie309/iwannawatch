@@ -13,7 +13,7 @@ export default function EmailVerification(props: Props): ReactElement<Props, any
 
     const onSubmit = async (e: React.ChangeEvent<HTMLFormElement>): Promise<void> => {
         e.preventDefault();
-
+        setErrorForm("Feature not available yet!");
         console.log('Send Email verification')
     }
 

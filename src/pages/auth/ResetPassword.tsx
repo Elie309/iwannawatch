@@ -23,6 +23,8 @@ export default function ResetPassword(): React.ReactElement<Props, any> {
             return;
         }
 
+        console.log(token);
+
         //TODO: send email with link to reset password
         console.log("Reset password")
 
