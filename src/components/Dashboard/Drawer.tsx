@@ -1,6 +1,6 @@
 import { Component } from 'react';
-import LabelFilledIcon from '../../icons/LabelFilledIcon';
-import AddCircleOutlinedIcon from '../../icons/AddCircleOutlinedIcon';
+import LabelFilledIcon from '../../assets/icons/LabelFilledIcon';
+import AddCircleOutlinedIcon from '../../assets/icons/AddCircleOutlinedIcon';
 import { CSSTransition } from 'react-transition-group';
 import '../../styles/animation/ADrawer.css';
 import { AnimationState } from '../../Interfaces/Others/AnimationState';

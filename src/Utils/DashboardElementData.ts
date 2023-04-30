@@ -1,4 +1,4 @@
-import { Rating } from './../Interfaces/IElement';
+import { Rating } from '../Interfaces/IElement';
 import IElement from "../Interfaces/IElement";
 import { ElementsTypes, PersonalStateElement, GeneralStateElement, ReleaseTypes } from "../Interfaces/Enums";
 import { faker } from '@faker-js/faker';

@@ -1,23 +1,16 @@
-import { useQuery } from '@tanstack/react-query';
-import { AxiosError, AxiosResponse } from 'axios';
 import React, { ReactElement, useRef } from 'react';
 import FormInput from "../../components/FormInput/FormInput";
 import LoadingSpinner from '../../components/Others/LoadingSpinner';
-import axiosInstance from '../../data/axiosInstance';
-import checkifAllFormInputAreOkay from '../../Helpers/checkIfAllFormInputAreOkay';
-import { setAccessToken, setRefreshToken } from '../../Helpers/TokenHandler';
-import IUnifyResponse from '../../Interfaces/IUnifyResponse';
-import { regEmail, regPasswordForLogin } from "../../Utils/regexconfig"
+import checkifAllFormInputAreOkay from '../../Utils/checkIfAllFormInputAreOkay';
+import { regEmail, regPasswordForLogin } from "../../Utils/regexconfig";
+
+import { signInWithEmailAndPassword, AuthErrorCodes } from 'firebase/auth';
+import { auth } from '../../../Firebase/firebase';
+import { FirebaseError } from 'firebase/app';
 
 interface Props { }
 
 
-const createSession = async (email: string, password: string): Promise<AxiosResponse<IUnifyResponse, any>> => {
-    return await axiosInstance.post<IUnifyResponse>('sessions', {
-        email,
-        password
-    });
-}
 
 
 
@@ -28,20 +21,10 @@ export default function Login(): ReactElement<Props, any> {
     let passwordRef = useRef<FormInput>(null);
 
     const [errorForm, setErrorForm] = React.useState<string | null>(null);
-    const { refetch, isFetching } = useQuery(['login'], () => createSession(emailRef.current!.getValue(), passwordRef.current!.getValue()),
-        {
-            enabled: false,
-            refetchOnWindowFocus: false,
-            refetchOnMount: false,
-            refetchOnReconnect: false,
-            retry: 3,
-            cacheTime: 0,
-            retryDelay: 1000,
-        });
+    const [isLoading, setIsLoading] = React.useState<boolean>(false);
 
-
-    const onSubmit = async (e: React.ChangeEvent<HTMLFormElement>): Promise<void> => {
-        e.preventDefault();
+    const onSubmit = async (error: React.ChangeEvent<HTMLFormElement>): Promise<void> => {
+        error.preventDefault();
         setErrorForm('');
 
         if (!checkifAllFormInputAreOkay(emailRef.current!, passwordRef.current!)) {
@@ -49,23 +32,46 @@ export default function Login(): ReactElement<Props, any> {
             return;
         }
 
-        await refetch({ throwOnError: true }).then((response) => {
-            const fetchedData = response.data!.data;
-            if (fetchedData.success) {
-                setAccessToken(fetchedData.data.accessToken);
-                setRefreshToken(fetchedData.data.refreshToken);
-                window.location.href = '/dashboard';
-                return;
+        setIsLoading(true);
+
+
+        try {
+            await signInWithEmailAndPassword(auth,
+                emailRef.current!.getValue(),
+                passwordRef.current!.getValue()
+            );
+
+            setIsLoading(false);
+        } catch (error: any) {
+
+            if (error instanceof FirebaseError) {
+
+                if (error.message.match(AuthErrorCodes.USER_DISABLED)) {
+                    setErrorForm('Your account has been disabled');
+                } else if (error.message.match(AuthErrorCodes.CAPTCHA_CHECK_FAILED)) {
+                    setErrorForm('Captcha check failed');
+                } else if (error.message.match(AuthErrorCodes.INVALID_EMAIL)) {
+                    setErrorForm('Invalid email or password');
+                } else if (error.message.match(AuthErrorCodes.INVALID_PASSWORD)) {
+                    setErrorForm('Invalid email or password');
+
+                } else if (error.message.match(AuthErrorCodes.USER_DELETED)) {
+                    setErrorForm('Invalid email or password');
+                } else {
+                    setErrorForm(error.message);
+                    //TODO: Log error
+                }
+            }else{
+                setErrorForm("An error occured");
+                //TODO: Log error
             }
-        }).catch((error) => {
-            if (error instanceof AxiosError) {
-                setErrorForm(error.response?.data.message);
-                return;
-            }
-            setErrorForm('Something went wrong');
-            return;
-        });
+
+            setIsLoading(false);
+        }
+
+
     }
+
 
     return (
 
@@ -104,17 +110,26 @@ export default function Login(): ReactElement<Props, any> {
 
                 </div>
 
+
+
                 <p className='my-1 text-center text-red-600'>
                     {errorForm}
                 </p>
 
-                {isFetching && <LoadingSpinner />}
+                {
+                    isLoading &&
+                    <div className='w-full grid place-content-center'>
+                        <LoadingSpinner />
+
+                    </div>
+                }
+
 
                 <div className="my-1 text-center">
                     <a className='cursor-pointer italic text-sm text-blue-600' href="/forgot-password">Forgot Password?</a>
                 </div>
 
-                
+
                 {/* //TODO: Recaptcha */}
 
                 <div className='w-full text-center'>

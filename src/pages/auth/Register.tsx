@@ -1,24 +1,17 @@
 import React, { useRef } from 'react'
 import FormInput from '../../components/FormInput/FormInput'
 import { regEmail, regPasswordForRegistration, regUsername } from '../../Utils/regexconfig'
-import axiosInstance from '../../data/axiosInstance'
-import checkifAllFormInputAreOkay from '../../Helpers/checkIfAllFormInputAreOkay'
-import IUnifyResponse from '../../Interfaces/IUnifyResponse'
-import { AxiosError, AxiosResponse } from 'axios'
-import { useQuery } from '@tanstack/react-query'
+import checkifAllFormInputAreOkay from '../../Utils/checkIfAllFormInputAreOkay'
 import LoadingSpinner from '../../components/Others/LoadingSpinner'
+
+
+import { auth } from '../../../Firebase/firebase'
+import { AuthErrorCodes, createUserWithEmailAndPassword, sendEmailVerification, updateProfile } from 'firebase/auth'
+import { FirebaseError } from 'firebase/app'
 
 
 interface Props { }
 
-
-const createUser = async (username: string, email: string, password: string): Promise<AxiosResponse<IUnifyResponse, any>> => {
-  return await axiosInstance.post<IUnifyResponse>('users', {
-    username,
-    email,
-    password
-  });
-}
 
 export default function Register(): React.ReactElement<Props, any> {
 
@@ -28,22 +21,8 @@ export default function Register(): React.ReactElement<Props, any> {
   const termsAndConditionsRef = useRef<HTMLInputElement>(null)
 
   const [errorForm, setErrorForm] = React.useState<string | null>(null);
+  const [isLoading, setIsLoading] = React.useState<boolean>(false);
 
-  const { refetch, isFetching } = useQuery(['login'],
-    () => createUser(usernameRef.current!.getValue(),
-      emailRef.current!.getValue(),
-      passwordRef.current!.getValue()
-    ),
-    {
-      enabled: false,
-      refetchOnWindowFocus: false,
-      refetchOnMount: false,
-      refetchOnReconnect: false,
-      retry: 3,
-      cacheTime: 0,
-      retryDelay: 1000,
-    }
-  );
 
   const onSubmit = async (e: React.ChangeEvent<HTMLFormElement>): Promise<void> => {
     e.preventDefault();
@@ -60,20 +39,65 @@ export default function Register(): React.ReactElement<Props, any> {
       return;
     }
 
-    await refetch({ throwOnError: true }).then((response) => {
-      const fetchedData = response.data!.data;
-      if (fetchedData.success) {
-        window.location.href = '/login';
-        return;
+    setIsLoading(true);
+
+
+    try {
+
+      const userCredential = await createUserWithEmailAndPassword(auth, emailRef.current!.getValue(), passwordRef.current!.getValue());
+
+      const user = userCredential.user;
+
+      if (user) {
+
+        await updateProfile(user, {
+          displayName: usernameRef.current!.getValue()
+        });
+
+        await sendEmailVerification(user);
+
       }
-    }).catch((error) => {
-      if (error instanceof AxiosError) {
-        setErrorForm(error.response?.data.message);
-        return;
+
+      setIsLoading(false);
+
+
+    } catch (e: any) {
+
+      if(e instanceof FirebaseError){
+
+        if(e.message.match(AuthErrorCodes.EMAIL_EXISTS)){
+          setErrorForm('Email already exists');
+        }else if(e.message.match(AuthErrorCodes.INVALID_EMAIL)){
+          setErrorForm('Invalid email');
+        }else if(e.message.match(AuthErrorCodes.OPERATION_NOT_ALLOWED)){
+          setErrorForm('Operation not allowed');
+        }else if(e.message.match(AuthErrorCodes.TOO_MANY_ATTEMPTS_TRY_LATER)){
+          setErrorForm('Too many attempts, try again later');
+        }else if(e.message.match(AuthErrorCodes.WEAK_PASSWORD)){
+          setErrorForm('Weak password');
+        }else {
+          console.log(e.message)
+          setErrorForm(e.message);
+          //TODO: Log error
+        }
+
+
+      }else{
+
+        //TODO: Log error
+        setErrorForm("Something went wrong, please try again later");
+
       }
-      setErrorForm('Something went wrong');
-      return;
-    });
+
+
+
+     
+
+      setIsLoading(false);
+    }
+
+
+
 
   }
 
@@ -139,7 +163,13 @@ export default function Register(): React.ReactElement<Props, any> {
           {errorForm}
         </p>
 
-        {isFetching ? <LoadingSpinner /> : null}
+        {
+          isLoading &&
+          <div className='w-full grid place-content-center'>
+            <LoadingSpinner />
+
+          </div>
+        }
 
 
 

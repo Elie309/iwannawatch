@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import StarRatingIcon from '../../icons/StarRatingIcon';
+import StarRatingIcon from '../../assets/icons/StarRatingIcon';
 import IElement, { Rating } from '../../Interfaces/IElement';
 
 

@@ -1,4 +1,3 @@
-import React from 'react'
 import { ISvgComponent } from './ISvgComponent'
 
 export default function StarRatingIcon(props: ISvgComponent) {

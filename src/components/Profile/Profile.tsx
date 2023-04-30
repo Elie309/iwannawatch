@@ -1,9 +1,10 @@
 import { Component } from 'react'
-import axiosInstance from '../../data/axiosInstance';
-import { setAccessToken, setRefreshToken } from '../../Helpers/TokenHandler';
-import ProfilSkeleton from '../../icons/ProfilSkeleton'
+import ProfilSkeleton from '../../assets/icons/ProfilSkeleton'
 import AppearingMenu from '../AppearingDiv/AppearingMenu';
 import AppearingMenuChild from '../AppearingDiv/AppearingMenuChild';
+
+import {auth} from '../../../Firebase/firebase';
+import {signOut} from 'firebase/auth';
 
 interface Props {
 
@@ -35,21 +36,12 @@ export default class Profile extends Component<Props> {
 
     LogoutHandler() {
         try {
-            axiosInstance.delete('sessions').then(res => {return res.data}).then(data => {
-                if(data.success) {
-                    setAccessToken(data.data.accessToken || '');
-                    setRefreshToken(data.data.refreshToken || '');
-                    window.location.reload();
-                }else{
-                    //TODO: handle why is it unsuccessfull
-                    setAccessToken('');
-                    setRefreshToken('');
-                    window.location.reload();
-                }
-            })
+            
+            signOut(auth)
 
         } catch (e: any) {
-            //TODO: Handle error
+            console.log(e);
+            //TODO: Error handling
         }
     }
 
@@ -58,7 +50,7 @@ export default class Profile extends Component<Props> {
 
         const profileList = Object.values(ProfileSettings);
 
-        const PorfileSettingsList = profileList.map((PorfileSettingsElement: string, index: number) => {
+        const PorfileSettingsList = profileList.map((PorfileSettingsElement: string) => {
             return (
                 <AppearingMenuChild
                     key={PorfileSettingsElement}

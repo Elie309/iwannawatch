@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import Profile from '../Profile/Profile';
 import SearchForm from './SearchForm';
-import HamburgerIcon from '../../icons/HamburgerIcon';
+import HamburgerIcon from '../../assets/icons/HamburgerIcon';
 
 
 

@@ -1,5 +1,5 @@
 import React, { Component, MutableRefObject } from 'react'
-import ShowPassword from '../../icons/ShowPassword'
+import ShowPassword from '../../assets/icons/ShowPassword'
 interface Props {
 
     name: string;

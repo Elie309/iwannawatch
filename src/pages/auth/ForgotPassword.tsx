@@ -1,7 +1,11 @@
 import React, { useRef } from 'react'
 import FormInput from '../../components/FormInput/FormInput';
-import checkifAllFormInputAreOkay from '../../Helpers/checkIfAllFormInputAreOkay';
+import checkifAllFormInputAreOkay from '../../Utils/checkIfAllFormInputAreOkay';
 import { regEmail } from '../../Utils/regexconfig'
+
+import { auth } from "../../../Firebase/firebase";
+import { sendPasswordResetEmail } from "firebase/auth";
+import LoadingSpinner from '../../components/Others/LoadingSpinner';
 
 interface Props { }
 
@@ -10,6 +14,8 @@ export default function ForgotPassword(): React.ReactElement<Props, any> {
     let emailRef = useRef<FormInput>(null);
 
     let [errorForm, setErrorForm] = React.useState<string | null>(null);
+    let [isLoading, setIsLoading] = React.useState<boolean>(false);
+
 
 
     const onSubmit = async (e: React.ChangeEvent<HTMLFormElement>): Promise<void> => {
@@ -20,8 +26,24 @@ export default function ForgotPassword(): React.ReactElement<Props, any> {
             return;
         }
 
-        //TODO: send email with link to reset password
-        console.log('Forgot Password')
+        setIsLoading(true);
+
+        try {
+
+            await sendPasswordResetEmail(auth, emailRef.current!.getValue());
+
+            setErrorForm('Password reset email sent');
+            setIsLoading(false);
+
+
+        } catch (error: any) {
+
+            setErrorForm(error.message);
+            setIsLoading(false);
+
+
+        }
+
     }
 
 
@@ -53,7 +75,13 @@ export default function ForgotPassword(): React.ReactElement<Props, any> {
 
                 {/* //TODO: Recaptcha */}
 
-               
+                {
+                    isLoading &&
+                    <div className='w-full grid place-content-center'>
+                        <LoadingSpinner />
+
+                    </div>
+                }
 
                 <div className='w-full text-center'>
                     <input type="submit" value="Request change"
@@ -61,6 +89,8 @@ export default function ForgotPassword(): React.ReactElement<Props, any> {
                                        text-slate-100 rounded-full'
                     />
                 </div>
+
+                
 
                 <div className='my-1 text-center'>
                     <a className='cursor-pointer text-sm italic text-blue-600' href="/">

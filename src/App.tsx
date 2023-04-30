@@ -1,64 +1,67 @@
-import React, { Suspense, useEffect, useState } from "react";
+import React, { Suspense, useState } from "react";
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import Home from "./pages/Home";
 import "./styles/index.css";
 
-import isSessionActive from "./Helpers/isSessionActive";
 import LoadingSpinner from "./components/Others/LoadingSpinner";
 import Container from "./components/Others/Container";
+
+import { auth } from "../Firebase/firebase";
+import { onAuthStateChanged } from "firebase/auth";
 
 const Dashboard = React.lazy(() => import("./pages/dashboard/Dashboard"));
 const Login = React.lazy(() => import("./pages/auth/Login"));
 const Register = React.lazy(() => import("./pages/auth/Register"));
 const ForgotPassword = React.lazy(() => import("./pages/auth/ForgotPassword"));
-const ResetPassword = React.lazy(() => import("./pages/auth/ResetPassword"));
 const EmailVerification = React.lazy(() => import("./pages/auth/EmailVerification"));
 
 
-enum LOADING_STATE {
-    NOT_LOADING = -1,
-    START = 0,
-    LOADING = 1,
-    FINISH = 2,
-}
 
 export default function App() {
-    const [loading, setLoading] = useState<LOADING_STATE>(LOADING_STATE.START);
+
+
+    const [isLoading, setIsLoading] = useState<boolean>(false);
     const [loggedIn, setLoggedIn] = useState<boolean>(false);
 
-    useEffect(() => {
-        try {
-            setLoading(LOADING_STATE.LOADING);
-            isSessionActive().then(res => {
-                setLoading(LOADING_STATE.FINISH);
-                setLoggedIn(res);
-            });
 
-        } catch (error: any) {
-            setLoading(LOADING_STATE.FINISH);
+    onAuthStateChanged(auth, (user) => {
+        if (user) {
+            setLoggedIn(true);
+
+        } else {
             setLoggedIn(false);
+
         }
+
+
+    })
+
+    React.useEffect(() => {
+        setIsLoading(true);
+        setTimeout(() => {
+            setIsLoading(false);
+        }, 1000)
     }, [])
 
 
-    const HelpRendering = (MainElement: JSX.Element | React.ReactElement, LoadingElement: JSX.Element | React.ReactElement, SpareElement: JSX.Element | React.ReactElement): JSX.Element | React.ReactElement => {
 
-        // if (loading === LOADING_STATE.START || loading === LOADING_STATE.LOADING) {
-        //     return LoadingElement;
-        // }
+    const HelpRendering = (MainElement: JSX.Element | React.ReactElement, SpareElement: JSX.Element | React.ReactElement): JSX.Element | React.ReactElement => {
 
-        // if (loggedIn && loading === LOADING_STATE.FINISH) {
-        //     return MainElement;
-        // }
-        // return SpareElement;
 
         return (
-            <Suspense key={1}  fallback={LoadingElement}>
-                {(loggedIn && loading === LOADING_STATE.FINISH) ? MainElement : SpareElement}
+
+            <Suspense key={1} fallback={
+                <div className='w-screen h-screen grid place-content-center'>
+                    <LoadingSpinner />
+                </div>
+            }>
+                {loggedIn && !isLoading && MainElement}
+                {!loggedIn && !isLoading && SpareElement}
             </Suspense>
         )
 
     }
+
 
 
     return (
@@ -71,32 +74,43 @@ export default function App() {
                 />
 
                 <Route path='dashboard'
-                    // element={HelpRendering(<Dashboard />, <LoadingSpinner />, <Navigate to="/login" replace={true} />)}
-                    element={HelpRendering(<Dashboard />, <LoadingSpinner />, <Dashboard />)}
+                    element={
+                        HelpRendering(
+                            <Dashboard />,
+                            <Navigate to="/login" replace={true} />
+                        )}
                 />
 
 
                 <Route path="login"
-                    element={HelpRendering(<Navigate to="/dashboard" replace={true} />, <LoadingSpinner />, <Container children={<Login />} />)}
+                    element={
+                        HelpRendering(
+                            <Navigate to="/dashboard" replace={true} />,
+                            <Container children={<Login />} />
+                        )}
                 />
                 <Route path="register"
-                    element={HelpRendering(<Navigate to="/dashboard" replace={true} />, <LoadingSpinner />, <Container children={<Register />} />)}
+                    element={
+                        HelpRendering(<Navigate to="/dashboard" replace={true} />,
+                            <Container children={<Register />} />
+                        )}
                 />
 
-                <Route path="forgot-password">
-                    <Route 
-                        path=""
-                        element={HelpRendering(<Navigate to="/dashboard" replace={true} />, <LoadingSpinner />, <Container children={<ForgotPassword />} />)}
-                    />
-                    <Route path=':token' element={
-                        HelpRendering(<Navigate to="/dashboard" replace={true} />, <LoadingSpinner />, <Container children={<ResetPassword />} />)
-                    }/>
+                <Route path="forgot-password"
+                    element={
+                        HelpRendering(<Navigate to="/dashboard" replace={true} />,
+                            <Container children={<ForgotPassword />} />
+                        )}
+                />
 
-                </Route>
 
                 <Route path="email-verification" element={
-                    HelpRendering(<Navigate to="/dashboard" replace={true} />, <LoadingSpinner />, <Container children={<EmailVerification data={{ username: "Elie309", email: 'elie309@outlook.fr' }} />} />)
-                } />
+                    HelpRendering(
+                        // <Navigate to="/dashboard" replace={true} />,
+                        <Container children={<EmailVerification />} />,
+                        <Container children={<EmailVerification />} />
+                    )}
+                />
 
                 {/* NO MATCH ROUTE */}
                 <Route

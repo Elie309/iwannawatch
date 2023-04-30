@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
-import CloseIcon from '../../icons/CloseIcon';
-import SearchIcon from '../../icons/SearchIcon';
+import CloseIcon from '../../assets/icons/CloseIcon';
+import SearchIcon from '../../assets/icons/SearchIcon';
 
 
 const ICON_HEIGHT_SEARCH = 18;

@@ -5,10 +5,15 @@ export default function LoadingSpinner() {
 
     return (
 
+
         <div className='loading-ripple'>
             <div></div>
             <div></div>
         </div>
+
+
+
+
 
     )
 }
